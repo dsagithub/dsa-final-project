@@ -28,6 +28,10 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 
+
+
+
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.Restaurante;
