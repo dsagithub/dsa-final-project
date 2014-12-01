@@ -30,6 +30,7 @@ create table restaurantes (
 	categoria				varchar (100) not null,
 	creador					varchar (20) not null,
 	provincia				varchar (70) not null,
+	creation_timestamp		datetime not null default current_timestamp,
 	foreign key(creador)	references users(username)
 	
 );
