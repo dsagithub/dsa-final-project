@@ -13,7 +13,7 @@
         </init-param>
         <init-param>
 			<param-name>javax.ws.rs.Application</param-name>
-			<param-value>edu.upc.eetac.dsa.urtasun.urtasun.api.UrtasunApplication</param-value>
+			<param-value>edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.RestaurappApplication</param-value>
 		</init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>

@@ -49,7 +49,6 @@
             <groupId>org.glassfish.jersey.media</groupId>
             <artifactId>jersey-media-moxy</artifactId>
         </dependency>
-        
         -->
          <dependency>
         	<groupId>mysql</groupId>
