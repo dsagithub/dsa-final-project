@@ -177,7 +177,8 @@ public class RestauranteResource {
 	@DELETE
 	@Path("/{idrestaurante}")
 	public void deleteRestaurante(@PathParam("idrestaurante") String idrestaurante) { // DELETE
-
+		
+		validateCreadorOaDmin(idrestaurante);
 		System.out.println("Borrando restaurnte....");
 		Connection conn = null;
 		try {
@@ -222,6 +223,7 @@ public class RestauranteResource {
 	@Produces(MediaType.RESTAURAPP_API_RESTAURATE)
 	public Restaurante updateRestaurante(@PathParam("idrestaurante") String idrestaurante, Restaurante restaurante) { // UPDATE
 		
+		validateCreadorOaDmin(idrestaurante);
 		System.out.println("Actualizando restaurante....");
 
 		Connection conn = null;
@@ -271,6 +273,60 @@ public class RestauranteResource {
 	}
 	
 	
+	private String INSERT_RESTAURANTE_QUERY = "insert into restaurantes (nombre, direccion, telefono, email, horario, categoria, creador, provincia) values (?,?,?,?,?,?,?,?)";
+
+	@POST
+	@Consumes(MediaType.RESTAURAPP_API_RESTAURATE)
+	@Produces(MediaType.RESTAURAPP_API_RESTAURATE)
+	public Restaurante createLibro(Restaurante restaurante) { // CREATE
+
+		validateRegistradoOaDmin();
+		System.out.println("Creando restaurante....");
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(INSERT_RESTAURANTE_QUERY,
+					Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, restaurante.getNombre());
+			stmt.setString(2, restaurante.getDireccion());
+			stmt.setString(3, restaurante.getTelefono());
+			stmt.setString(4, restaurante.getEmail());
+			stmt.setString(5, restaurante.getHorario());
+			stmt.setString(6, restaurante.getCategoria());
+			stmt.setString(7, restaurante.getCreador());
+			stmt.setString(8, restaurante.getProvincia());
+
+
+
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				int idrestaurante = rs.getInt(1);
+				restaurante = getRestauranteFromDatabase(Integer.toString(idrestaurante));
+
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return restaurante;
+	}
+	
 	private String GET_RESTAURANTE_BY_ID_QUERY = "select rest.*,u.username from restaurantes rest, users u where rest.creador=u.username and idrestaurante=?";
 
 	private Restaurante getRestauranteFromDatabase(String idrestuarante) { // GET AUTHOR DATABASE
@@ -319,4 +375,22 @@ public class RestauranteResource {
 
 	}
 
+	
+	
+	private void validateCreadorOaDmin(String idrestaurante) {// VALIDATEADMIN&USER
+		Restaurante restaurante = getRestauranteFromDatabase(idrestaurante);
+		String creadorRestaurante = restaurante.getCreador();
+		System.out.println("id -->" + idrestaurante + "comparo " + creadorRestaurante + " y "
+				+ security.getUserPrincipal().getName());
+		if (!(security.getUserPrincipal().getName().equals(creadorRestaurante) || security
+				.isUserInRole("administrador")))
+			throw new ForbiddenException("Este Restaurante no es tuyo.");
+
+	}
+	private void validateRegistradoOaDmin() {// VALIDATEADMIN&USER
+		if (!(security.isUserInRole("registrado") || security
+				.isUserInRole("administrador")))
+			throw new ForbiddenException("Necesitas registrarte.");
+
+	}
 }
