@@ -11,6 +11,7 @@ public class Restaurante {
 	private String categoria;
 	private String provincia;
 	private String creador;
+<<<<<<< HEAD
 	private long creationTime;
 	
 	public long getCreationTime() {
@@ -19,6 +20,9 @@ public class Restaurante {
 	public void setCreationTime(long creationTime) {
 		this.creationTime = creationTime;
 	}
+=======
+	
+>>>>>>> refs/remotes/origin/develop_html
 	public String getCreador() {
 		return creador;
 	}
