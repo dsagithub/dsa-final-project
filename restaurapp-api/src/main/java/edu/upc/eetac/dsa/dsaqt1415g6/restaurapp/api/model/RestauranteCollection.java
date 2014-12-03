@@ -18,6 +18,7 @@ import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.MediaType;
 public class RestauranteCollection {
 	
 	
+	
 	@InjectLinks({
 		@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "create-restaurante", title = "Crear Restaurante", type = MediaType.RESTAURAPP_API_RESTAURATE),
 		@InjectLink(value = "/restaurantes?last={last}", style = Style.ABSOLUTE, rel = "anterior", title = "Restaurantes Anteriores", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "last", value = "${instance.oldestTimestamp}") }),//$-->toda {}--> valor deseado
