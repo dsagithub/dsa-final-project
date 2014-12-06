@@ -15,11 +15,7 @@ public class DataSourceSPA {
 		try {
 			envContext = new InitialContext();
 			Context initContext = (Context) envContext.lookup("java:/comp/env");
-<<<<<<< HEAD
-			dataSource = (DataSource) initContext.lookup("jdbc/restaurappdb"); 
-=======
 			dataSource = (DataSource) initContext.lookup("jdbc/librosdb"); 
->>>>>>> refs/remotes/origin/develop_html
 		} catch (NamingException e1) {
 			e1.printStackTrace();
 		}
