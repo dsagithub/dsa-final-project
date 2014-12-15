@@ -24,6 +24,7 @@ public class Restaurante {
 	private String categoria;
 	private String provincia;
 	private String creador;
+
 	private long creationTime;
 
 	@InjectLinks({
