@@ -9,7 +9,7 @@ create table users (
 	nombre					varchar(70) not null,
 	email					varchar(255) not null,
 	provincia				varchar(70) not null,
-	contador_O_U			int not null,
+	contador_O_U			int not null default 0,
 	foto					varchar(255) not null	
 );
 
@@ -38,15 +38,15 @@ create table restaurantes (
 
 create table opiniones (
 	idopinion				int not null auto_increment primary key,
-	idrestaurante			int not null,
+	idrest					int not null,
 	titulo					varchar(70) not null,
 	puntuacion				int not null,
 	texto					varchar(250) not null,
 	mes_estancia			varchar(100) not null,	
 	username				varchar(20) not null,
-	cont_utilidad			int not null,
-	cont_noutilidad			int not null,
-	creation_timestamp		datetime not null default current_timestamp,
+	cont_utilidad			int not null default 0,
+	cont_noutilidad			int not null default 0,
+	opinion_creation		datetime not null default current_timestamp,
 	foreign key(username)	references users(username) on delete cascade
 
 );

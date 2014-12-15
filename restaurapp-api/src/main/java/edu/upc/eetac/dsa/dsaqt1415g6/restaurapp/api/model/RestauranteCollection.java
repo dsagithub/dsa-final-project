@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Link;
-
 import org.glassfish.jersey.linking.Binding;
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLinks;
@@ -16,9 +15,6 @@ import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.MediaType;
 
 
 public class RestauranteCollection {
-	
-	
-	
 	
 	
 	@InjectLinks({
@@ -39,7 +35,13 @@ public class RestauranteCollection {
 		restaurantes.add(restaurante);
 	}
 	
-	
+		public List<Link> getLinks() {
+		return links;
+	}
+
+	public void setLinks(List<Link> links) {
+		this.links = links;
+	}
 	public List<Restaurante> getRestaurantes() {
 		return restaurantes;
 	}

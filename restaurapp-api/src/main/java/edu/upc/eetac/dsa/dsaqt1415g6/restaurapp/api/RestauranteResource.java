@@ -30,6 +30,7 @@ import javax.ws.rs.core.SecurityContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.Opinion;
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.Restaurante;
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.RestauranteCollection;
 
@@ -43,8 +44,8 @@ public class RestauranteResource {
 
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	
-	private String GET_RESTAURATES_QUERY = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador order by  idrestaurante desc limit ?";
-	private String GET_RESTAURATES_QUERY_FROM_LAST = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.idrestaurante > ? order by idrestaurante desc";
+	private String GET_RESTAURATES_QUERY = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest order by  rest.idrestaurante desc limit ?";
+	private String GET_RESTAURATES_QUERY_FROM_LAST = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest and rest.idrestaurante > ? order by rest.idrestaurante desc";
 
 	@GET
 	@Produces(MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION)
@@ -88,6 +89,7 @@ public class RestauranteResource {
 				System.out.println("dentro del while");
 
 				Restaurante restaurante = new Restaurante();
+				
 				restaurante.setNombre(rs.getString("nombre"));
 				restaurante.setCategoria(rs.getString("categoria"));
 				restaurante.setDireccion(rs.getString("direccion"));
@@ -105,17 +107,25 @@ public class RestauranteResource {
 					first = false;
 					restaurantes.setNewestTimestamp(restaurante.getCreationTime());
 				}
+				
+				Opinion opinion = new Opinion();
+				
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
+				
+				
+				restaurante.addOpinion(opinion);
 				restaurantes.addRestaurantes(restaurante);
-				System.out.println("Nombre del restaurante...."+ restaurante.getNombre());
-				System.out.println("Categoria del restaurante...."+ restaurante.getCategoria());
-				System.out.println("Direccion del restaurante...."+ restaurante.getDireccion());
-				System.out.println("email del restaurante...."+ restaurante.getEmail());
-				System.out.println("horario del restaurante...."+ restaurante.getHorario());
-				System.out.println("idrestaurante del restaurante...."+ restaurante.getIdrestaurante());
-				System.out.println("provincia del restaurante...."+ restaurante.getProvincia());
-				System.out.println("telefono del restaurante...."+ restaurante.getTelefono());
-				System.out.println("username del restaurante...."+ restaurante.getCreador());
 
+				
 				
 
 			}
@@ -278,9 +288,9 @@ public class RestauranteResource {
 	@POST
 	@Consumes(MediaType.RESTAURAPP_API_RESTAURATE)
 	@Produces(MediaType.RESTAURAPP_API_RESTAURATE)
-	public Restaurante createLibro(Restaurante restaurante) { // CREATE
+	public Restaurante createRestaurante(Restaurante restaurante) { // CREATE
 
-		validateRegistradoOaDmin();
+		//validateRegistradoOaDmin();
 		System.out.println("Creando restaurante....");
 		Connection conn = null;
 		try {
@@ -311,6 +321,8 @@ public class RestauranteResource {
 			if (rs.next()) {
 				int idrestaurante = rs.getInt(1);
 				restaurante = getRestauranteFromDatabase(Integer.toString(idrestaurante));
+				System.out.println("ola");
+
 
 			}
 		} catch (SQLException e) {
@@ -327,7 +339,7 @@ public class RestauranteResource {
 		return restaurante;
 	}
 	
-	private String GET_RESTAURANTE_BY_ID_QUERY = "select rest.*,u.username from restaurantes rest, users u where rest.creador=u.username and idrestaurante=?";
+	private String GET_RESTAURANTE_BY_ID = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest order by rest.idrestaurante desc";
 
 	private Restaurante getRestauranteFromDatabase(String idrestuarante) { // GET AUTHOR DATABASE
 
@@ -343,7 +355,7 @@ public class RestauranteResource {
 
 		PreparedStatement stmt = null;
 		try {
-			stmt = conn.prepareStatement(GET_RESTAURANTE_BY_ID_QUERY);
+			stmt = conn.prepareStatement(GET_RESTAURANTE_BY_ID);
 			stmt.setInt(1, Integer.valueOf(idrestuarante));
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
@@ -355,9 +367,29 @@ public class RestauranteResource {
 				restaurante.setDireccion(rs.getString("direccion"));
 				restaurante.setEmail(rs.getString("email"));
 				restaurante.setHorario(rs.getString("horario"));
+				
+				System.out.println("antes de idrest");
 				restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
+				System.out.println("despues de idrest");
+
 				restaurante.setProvincia(rs.getString("provincia"));
 				restaurante.setTelefono(rs.getString("telefono"));
+				
+				Opinion opinion = new Opinion();
+				
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
+				
+				
+				restaurante.addOpinion(opinion);
 				
 			}
 		} catch (SQLException e) {
@@ -388,9 +420,138 @@ public class RestauranteResource {
 
 	}
 	private void validateRegistradoOaDmin() {// VALIDATEADMIN&USER
-		if (!(security.isUserInRole("registrado") || security
+		System.out.println(security.getUserPrincipal().getName());
+		if (!(security.isUserInRole("registered") || security
 				.isUserInRole("administrador")))
 			throw new ForbiddenException("Necesitas registrarte.");
 
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+/*
+ * 
+ * 
+ * 
+ * 
+ * 
+ * OPINIONES
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ */
+	
+	private String INSERT_OPINION_QUERY = "insert into opiniones (idrest, titulo, puntuacion, texto, mes_estancia, username) values (?,?,?,?,?,?)";
+	
+	@POST
+	@Path("/opinion/{idrestaurante}")
+	@Consumes(MediaType.RESTAURAPP_API_OPINION)
+	@Produces(MediaType.RESTAURAPP_API_OPINION)
+	public Opinion createOpinion(@PathParam("idrestaurante") String idRestaurante, Opinion opinion) { // CREATE
+		
+		//validateRegistradoOaDmin();
+		System.out.println("Creando opinion....");
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(INSERT_OPINION_QUERY,
+					Statement.RETURN_GENERATED_KEYS);
+			
+			stmt.setInt(1, Integer.parseInt(idRestaurante));
+			stmt.setString(2, opinion.getTitulo());
+			stmt.setInt(3,opinion.getPuntuacion());
+			stmt.setString(4, opinion.getTexto());
+			stmt.setString(5, opinion.getFecha_estancia());
+			stmt.setString(6,opinion.getUsername());
+
+
+			stmt.executeUpdate();
+			ResultSet rs = stmt.getGeneratedKeys();
+			if (rs.next()) {
+				int idopinion = rs.getInt(1);
+				System.out.println("idopinion---"+idopinion);
+				opinion = getOpinionFromDatabase(Integer.toString(idopinion));
+
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return opinion;
+	}
+	
+	private String GET_OPINION_BY_ID_QUERY = "select * from opiniones where idrest=?";
+
+	
+	private Opinion getOpinionFromDatabase(String idrestuarante) { // GET AUTHOR DATABASE
+
+		Opinion opinion = new Opinion();
+
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_OPINION_BY_ID_QUERY);
+			stmt.setInt(1, Integer.valueOf(idrestuarante));
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("noutilidad"));
+				opinion.setUtilidad(rs.getInt("utilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+			}
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		return opinion;
+
+	}
+	
+	
+	
+	
 }

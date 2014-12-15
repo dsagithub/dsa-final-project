@@ -85,6 +85,6 @@
 		<role-name>registered</role-name>
 	</security-role>
 	<security-role>
-		<role-name>administrator</role-name>
+		<role-name>administrador</role-name>
 	</security-role>
 </web-app>
