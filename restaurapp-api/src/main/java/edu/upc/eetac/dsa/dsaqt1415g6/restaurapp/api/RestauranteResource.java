@@ -348,7 +348,7 @@ public class RestauranteResource {
 		return restaurante;
 	}
 	
-	private String GET_RESTAURANTE_BY_ID = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest order by rest.idrestaurante desc";
+	private String GET_RESTAURANTE_BY_ID = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=? order by rest.idrestaurante desc";
 
 	private Restaurante getRestauranteFromDatabase(String idrestuarante) { // GET AUTHOR DATABASE
 
@@ -367,22 +367,31 @@ public class RestauranteResource {
 			stmt = conn.prepareStatement(GET_RESTAURANTE_BY_ID);
 			stmt.setInt(1, Integer.valueOf(idrestuarante));
 			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
+			while (rs.next()) {
 				
-				restaurante.setNombre(rs.getString("nombre"));
-				restaurante.setCategoria(rs.getString("categoria"));
-				restaurante.setCreador(rs.getString("creador"));
-				restaurante.setCreationTime(rs.getTimestamp("creation_timestamp").getTime());
-				restaurante.setDireccion(rs.getString("direccion"));
-				restaurante.setEmail(rs.getString("email"));
-				restaurante.setHorario(rs.getString("horario"));
+				if(restaurante.getIdrestaurante()== 0 ){
+					
 				
-				System.out.println("antes de idrest");
-				restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
-				System.out.println("despues de idrest");
-
-				restaurante.setProvincia(rs.getString("provincia"));
-				restaurante.setTelefono(rs.getString("telefono"));
+					
+					restaurante.setNombre(rs.getString("nombre"));
+					restaurante.setCategoria(rs.getString("categoria"));
+					restaurante.setCreador(rs.getString("creador"));
+					restaurante.setCreationTime(rs.getTimestamp("creation_timestamp").getTime());
+					restaurante.setDireccion(rs.getString("direccion"));
+					restaurante.setEmail(rs.getString("email"));
+					restaurante.setHorario(rs.getString("horario"));
+					
+					System.out.println("antes de idrest");
+					restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
+					System.out.println("despues de idrest");
+	
+					restaurante.setProvincia(rs.getString("provincia"));
+					restaurante.setTelefono(rs.getString("telefono"));
+				}
+				else{
+					
+					restaurante = getRestauranteFromDatabase(idrestuarante);
+				}
 				
 				Opinion opinion = new Opinion();
 				
