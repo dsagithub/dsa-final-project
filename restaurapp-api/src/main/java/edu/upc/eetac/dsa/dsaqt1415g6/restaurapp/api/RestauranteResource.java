@@ -77,7 +77,7 @@ public class RestauranteResource {
 			if (updateFromLast) {
 				stmt.setInt(1, after);
 			}else{
-				length = (length <= 0) ? 3 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+				length = (length <= 0) ? 8 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
 				stmt.setInt(1, length);
 			}
 			ResultSet rs = stmt.executeQuery();
@@ -467,7 +467,7 @@ public class RestauranteResource {
 	@Produces(MediaType.RESTAURAPP_API_OPINION)
 	public Opinion createOpinion(@PathParam("idrestaurante") String idRestaurante, Opinion opinion) { // CREATE
 		
-		//validateRegistradoOaDmin();
+		validateRegistradoOaDmin();
 		System.out.println("Creando opinion....");
 		Connection conn = null;
 		try {
@@ -512,10 +512,10 @@ public class RestauranteResource {
 		return opinion;
 	}
 	
-	private String GET_OPINION_BY_ID_QUERY = "select * from opiniones where idrest=?";
+	private String GET_OPINION_BY_ID_QUERY = "select * from opiniones where idopinion=?";
 
 	
-	private Opinion getOpinionFromDatabase(String idrestuarante) { // GET AUTHOR DATABASE
+	private Opinion getOpinionFromDatabase(String idopinion) { // GET AUTHOR DATABASE
 
 		Opinion opinion = new Opinion();
 
@@ -530,7 +530,7 @@ public class RestauranteResource {
 		PreparedStatement stmt = null;
 		try {
 			stmt = conn.prepareStatement(GET_OPINION_BY_ID_QUERY);
-			stmt.setInt(1, Integer.valueOf(idrestuarante));
+			stmt.setInt(1, Integer.valueOf(idopinion));
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
 				
@@ -538,8 +538,8 @@ public class RestauranteResource {
 				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
 				opinion.setFecha_estancia(rs.getString("mes_estancia"));
 				opinion.setIdrestaurante(rs.getInt("idrest"));
-				opinion.setNoutilidad(rs.getInt("noutilidad"));
-				opinion.setUtilidad(rs.getInt("utilidad"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
 				opinion.setPuntuacion(rs.getInt("puntuacion"));
 				opinion.setTexto(rs.getString("texto"));
 				opinion.setTitulo(rs.getString("titulo"));
