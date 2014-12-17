@@ -36,7 +36,7 @@ public class Restaurante {
 
 	public Restaurante() {
 		super();
-		opiniones = new ArrayList<>();
+		opiniones = new ArrayList<Opinion>();
 	}
 
 	public List<Link> getLinks() {

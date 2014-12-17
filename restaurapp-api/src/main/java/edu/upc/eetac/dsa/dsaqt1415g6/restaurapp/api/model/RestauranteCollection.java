@@ -27,7 +27,7 @@ public class RestauranteCollection {
 
 	public RestauranteCollection() {
 		super();
-		restaurantes = new ArrayList<>();
+		restaurantes = new ArrayList<Restaurante>();
 	}
 
 	public void addRestaurantes(Restaurante restaurante) {
