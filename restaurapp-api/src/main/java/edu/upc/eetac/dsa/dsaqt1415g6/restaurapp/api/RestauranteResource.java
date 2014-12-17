@@ -88,26 +88,35 @@ public class RestauranteResource {
 			while (rs.next()) {
 				System.out.println("dentro del while");
 
-				Restaurante restaurante = new Restaurante();
+				Restaurante restaurante;
 				
-				restaurante.setNombre(rs.getString("nombre"));
-				restaurante.setCategoria(rs.getString("categoria"));
-				restaurante.setDireccion(rs.getString("direccion"));
-				restaurante.setEmail(rs.getString("email"));
-				
-				System.out.println("Nombre del restaurante...."+ restaurante.getNombre());
-				restaurante.setHorario(rs.getString("horario"));
-				oldestTimestamp = rs.getTimestamp("creation_timestamp").getTime();
-				restaurante.setCreationTime(oldestTimestamp);
-				restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
-				restaurante.setProvincia(rs.getString("provincia"));
-				restaurante.setTelefono(rs.getString("telefono"));
-				restaurante.setCreador(rs.getString("username"));
-				if (first) {
-					first = false;
-					restaurantes.setNewestTimestamp(restaurante.getCreationTime());
+				if (restaurantes.getRestaurante(rs.getInt("idrestaurante"))==null){
+					
+						restaurante = new Restaurante();
+						
+						restaurante.setNombre(rs.getString("nombre"));
+						restaurante.setCategoria(rs.getString("categoria"));
+						restaurante.setDireccion(rs.getString("direccion"));
+						restaurante.setEmail(rs.getString("email"));
+						
+						System.out.println("Nombre del restaurante...."+ restaurante.getNombre());
+						restaurante.setHorario(rs.getString("horario"));
+						oldestTimestamp = rs.getTimestamp("creation_timestamp").getTime();
+						restaurante.setCreationTime(oldestTimestamp);
+						restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
+						restaurante.setProvincia(rs.getString("provincia"));
+						restaurante.setTelefono(rs.getString("telefono"));
+						restaurante.setCreador(rs.getString("username"));
+						if (first) {
+							first = false;
+							restaurantes.setNewestTimestamp(restaurante.getCreationTime());
+						}
 				}
-				
+				else{
+									
+						restaurante = restaurantes.getRestaurante(rs.getInt("idrestaurante"));
+									
+					}
 				Opinion opinion = new Opinion();
 				
 				opinion.setFecha_estancia(rs.getString("mes_estancia"));
@@ -123,11 +132,10 @@ public class RestauranteResource {
 				
 				
 				restaurante.addOpinion(opinion);
-				restaurantes.addRestaurantes(restaurante);
-
 				
-				
-
+				if (restaurantes.getRestaurante(rs.getInt("idrestaurante"))==null){
+					restaurantes.addRestaurantes(restaurante);
+				}
 			}
 			restaurantes.setOldestTimestamp(oldestTimestamp);
 			System.out.println("paso final");
@@ -290,7 +298,7 @@ public class RestauranteResource {
 	@Produces(MediaType.RESTAURAPP_API_RESTAURATE)
 	public Restaurante createRestaurante(Restaurante restaurante) { // CREATE
 
-		//validateRegistradoOaDmin();
+		validateRegistradoOaDmin();
 		System.out.println("Creando restaurante....");
 		Connection conn = null;
 		try {
@@ -319,6 +327,7 @@ public class RestauranteResource {
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
+				System.out.println("antes de recuperar restaurante");
 				int idrestaurante = rs.getInt(1);
 				restaurante = getRestauranteFromDatabase(Integer.toString(idrestaurante));
 				System.out.println("ola");

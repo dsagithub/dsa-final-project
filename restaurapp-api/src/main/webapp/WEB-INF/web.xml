@@ -87,4 +87,18 @@
 	<security-role>
 		<role-name>administrador</role-name>
 	</security-role>
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Restaurantes</web-resource-name>
+			<url-pattern>/restaurantes/*</url-pattern>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>administrator</role-name>
+			<role-name>registered</role-name>
+		</auth-constraint>
+		
+	</security-constraint>
 </web-app>

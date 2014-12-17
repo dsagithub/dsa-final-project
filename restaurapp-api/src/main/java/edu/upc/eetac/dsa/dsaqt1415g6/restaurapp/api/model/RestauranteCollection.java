@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.core.Link;
+
 import org.glassfish.jersey.linking.Binding;
 import org.glassfish.jersey.linking.InjectLink;
 import org.glassfish.jersey.linking.InjectLinks;
 import org.glassfish.jersey.linking.InjectLink.Style;
+
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.RestauranteResource;
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.MediaType;
 
@@ -52,6 +54,15 @@ public class RestauranteCollection {
 
 	public long getNewestTimestamp() {
 		return newestTimestamp;
+	}
+	public Restaurante getRestaurante (int idrestaurante){
+		for( int i= 0 ;i<restaurantes.size();i++){
+			if(restaurantes.get(i).getIdrestaurante()==idrestaurante){
+				return restaurantes.get(i);
+			}
+			
+		}
+		return null;
 	}
 
 	public void setNewestTimestamp(long newestTimestamp) {
