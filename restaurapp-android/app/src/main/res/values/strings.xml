@@ -2,7 +2,18 @@
 <resources>
 
     <string name="app_name">Restaurapp</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configuración</string>
+    <string name="login_username">Usuario</string>
+    <string name="login_password">Contraseña</string>
+
+    <string name="sign_in_activate">Login</string>
+    <string name="cancel">Cancelar</string>
+    <string name="sign_up">Registrarse</string>
+
+
+
+
+
+
 
 </resources>

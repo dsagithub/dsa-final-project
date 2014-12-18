@@ -388,11 +388,7 @@ public class RestauranteResource {
 					restaurante.setProvincia(rs.getString("provincia"));
 					restaurante.setTelefono(rs.getString("telefono"));
 				}
-				else{
-					
-					restaurante = getRestauranteFromDatabase(idrestuarante);
-				}
-				
+
 				Opinion opinion = new Opinion();
 				
 				opinion.setFecha_estancia(rs.getString("mes_estancia"));
