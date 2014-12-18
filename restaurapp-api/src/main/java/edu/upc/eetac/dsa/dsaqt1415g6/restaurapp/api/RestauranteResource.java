@@ -319,7 +319,7 @@ public class RestauranteResource {
 			stmt.setString(4, restaurante.getEmail());
 			stmt.setString(5, restaurante.getHorario());
 			stmt.setString(6, restaurante.getCategoria());
-			stmt.setString(7, restaurante.getCreador());
+			stmt.setString(7, security.getUserPrincipal().getName());
 			stmt.setString(8, restaurante.getProvincia());
 
 
@@ -492,7 +492,7 @@ public class RestauranteResource {
 			stmt.setInt(3,opinion.getPuntuacion());
 			stmt.setString(4, opinion.getTexto());
 			stmt.setString(5, opinion.getFecha_estancia());
-			stmt.setString(6,opinion.getUsername());
+			stmt.setString(6, security.getUserPrincipal().getName());
 
 
 			stmt.executeUpdate();
