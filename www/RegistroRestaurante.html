@@ -5,7 +5,7 @@
 		
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<title>Registra un Restaurante</title>
-	<link href="css/bootstrap.min.css" rel="stylesheet"> 
+	
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -83,25 +83,33 @@
  <div class="col-sm-4">
             <div class="panel-body">
                 <div class="input-group input-group-sm">
-                  <span class="input-group-addon">Nombre</span> <input type="text" 
-				  class="form-control" id="nombre_registro">
+                  <span class="input-group-addon">Nombre Usuario</span> <input type="text" 
+				  class="form-control" id="user_registro">
                 </div>
 				<div class="input-group input-group-sm">
-                  <span class="input-group-addon">Direcci&oacuten </span> <input type="textbox" class="form-control" id="apellidos_registro">
+                  <span class="input-group-addon">Nombre Restaurante</span> <input type="text" 
+				  class="form-control" id="restaurante_registro">
                 </div>
 				<div class="input-group input-group-sm">
-                  <span class="input-group-addon">Tel&eacutefono</span> <input type="textbox" class="form-control" id="apellidos_registro">
+                  <span class="input-group-addon">Direcci&oacuten </span> <input type="textbox" class="form-control" id="direccion">
+                </div>
+				<div class="input-group input-group-sm">
+                  <span class="input-group-addon">Tel&eacutefono</span> <input type="textbox" class="form-control" id="telefono">
                 </div>				
 				<div class="input-group input-group-sm">
                   <span class="input-group-addon">Correo electr&oacutenico</span> <input
                     type="text" class="form-control" id="email_registro">
                 </div>
 				<div class="input-group input-group-sm">
-                  <span class="input-group-addon">Horario </span> <input type="textbox" class="form-control" id="apellidos_registro">
+                  <span class="input-group-addon">Horario </span> <input type="textbox" class="form-control" id="horario_registro">
                 </div>
 				<div class="input-group input-group-sm">
-                  <span class="input-group-addon">Categor&iacutea </span> <input type="textbox" class="form-control" id="apellidos_registro">
+                  <span class="input-group-addon">Categor&iacutea </span> <input type="textbox" class="form-control" id="categoria_registro">
                 </div>
+				<div class="input-group input-group-sm">
+                  <span class="input-group-addon">Provincia </span> <input type="textbox" class="form-control" id="provincia_registro">
+                </div>
+				<span id="create_result"></span>
 				
 							  <!--Provincia-->
 			 <!--	
@@ -190,7 +198,7 @@ function myFunction() {
             <div class="panel-body">
                <div class="btn-group">
                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                   <span data-bind="label">Seleccione una</span>&nbsp;<span class="caret"></span>
+                   <span data-bind="label">Seleccione una</span>&nbsp;<span class="caret"id="provincia"></span>
                  </button>
                  <ul class="dropdown-menu" role="menu">
                    <li><a href="#">Barcelona</a></li>
@@ -237,8 +245,7 @@ function myFunction() {
 
 
 
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script> 
+
 
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
