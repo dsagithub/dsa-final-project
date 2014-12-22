@@ -29,7 +29,9 @@ public class Restaurante {
         opiniones = new ArrayList<Opinion>();
     }
 
-
+    public void addOpinion(Opinion opinion) {
+        opiniones.add(opinion);
+    }
     public List<Opinion> getOpiniones() {
         return opiniones;
     }

@@ -15,8 +15,8 @@ import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.MediaType;
 public class RestaurappRootAPI {
 	@InjectLinks({//(1)al ser absoluta veremos la uri completa;
 		@InjectLink(resource = RestaurappRootAPIResource.class, style = Style.ABSOLUTE, rel = "self bookmark home", title = "Beeter Root API", method = "getRootAPI"),
-		@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "stings", title = "Latest stings", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION),
-		@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "create-stings", title = "Latest stings", type = MediaType.RESTAURAPP_API_RESTAURATE) })
+		@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "restaurantes", title = "Latest stings", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION),
+		@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "crear-restaurante", title = "Latest stings", type = MediaType.RESTAURAPP_API_RESTAURATE) })
 	private List<Link> links;
 
 	public List<Link> getLinks() {

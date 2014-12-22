@@ -33,6 +33,19 @@ public class RestauranteCollection {
     public void setRestaurantes(List<Restaurante> restaurantes) {
         this.restaurantes = restaurantes;
     }
+    public void addRestaurantes(Restaurante restaurante) {
+        restaurantes.add(restaurante);
+    }
+
+    public Restaurante getRestaurante (int idrestaurante){
+        for( int i= 0 ;i<restaurantes.size();i++){
+            if(restaurantes.get(i).getIdRestaurante()==idrestaurante){
+                return restaurantes.get(i);
+            }
+
+        }
+        return null;
+    }
 
     public long getOldestTimestamp() {
         return oldestTimestamp;

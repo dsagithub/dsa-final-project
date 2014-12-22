@@ -83,8 +83,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="25dip"
                         android:layout_weight="0.5"
-
-                        android:onClick="signIn"
+                        android:onClick="cancelar"
                         android:text="@string/cancel" />
              </LinearLayout>
             <TextView
