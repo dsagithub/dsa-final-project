@@ -1,6 +1,7 @@
 package edu.upc.eetac.dsa.dsaqt1415g6.restaurapp;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,67 +39,39 @@ public class RestauranteAdapter extends BaseAdapter{
 
     private static class ViewHolder {
         TextView tvName;
-        TextView tvAutor;
-        TextView tvHorario;
-        TextView tvTelefono;
-        TextView tvEmail;
-        TextView tvCategoria;
+        TextView tvCreador;
         TextView tvProvincia;
-        TextView tvCreacionDate;
-        TextView tvDireccion;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder = null;
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.listar_rest_layout, null);
+            convertView = inflater.inflate(R.layout.detalles_listado_layout, null);
             viewHolder = new ViewHolder();
-            viewHolder.tvAutor = (TextView) convertView
-                    .findViewById(R.id.tvDetailCreador);
-            viewHolder.tvCategoria = (TextView) convertView
-                    .findViewById(R.id.tvDetailCategoria);
-            viewHolder.tvCreacionDate = (TextView) convertView
-                    .findViewById(R.id.tvDetailDateCreation);
-            viewHolder.tvDireccion = (TextView) convertView
-                    .findViewById(R.id.tvDetailDireccion);
-            viewHolder.tvEmail = (TextView) convertView
-                    .findViewById(R.id.tvDetailEmail);
-            viewHolder.tvHorario = (TextView) convertView
-                    .findViewById(R.id.tvDetailHorario);
+            viewHolder.tvCreador = (TextView) convertView
+                    .findViewById(R.id.tvCreador);
             viewHolder.tvName = (TextView) convertView
-                    .findViewById(R.id.tvDetailName);
-            viewHolder.tvTelefono = (TextView) convertView
-                    .findViewById(R.id.tvDetailTelefono);
+                    .findViewById(R.id.tvNombre);
             viewHolder.tvProvincia = (TextView) convertView
-                    .findViewById(R.id.tvDetailProvincia);
+                    .findViewById(R.id.tvProvincia);
 
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String nombre = data.get(position).getNombre();
-        String autor = data.get(position).getCreador();
-        String horario = data.get(position).getHorario();
-        String categoria = data.get(position).getCategoria();
-        String direccion = data.get(position).getDireccion();
-        String creacion_date = SimpleDateFormat.getInstance().format(
-                data.get(position).getCreationTimeStamp());
-        String email = data.get(position).getEmail();
+        String creador = data.get(position).getCreador();
         String provincia = data.get(position).getProvincia();
-        String telefono = data.get(position).getTelefono();
 
 
-
-        viewHolder.tvAutor.setText(autor);
-        viewHolder.tvCreacionDate.setText(creacion_date);
-        viewHolder.tvProvincia.setText(provincia);
-        viewHolder.tvTelefono.setText(telefono);
+        Log.d(creador,"creador");
+        Log.d(nombre,"name");
+        Log.d(provincia,"provincia");
+        viewHolder.tvCreador.setText(creador);
         viewHolder.tvName.setText(nombre);
-        viewHolder.tvCategoria.setText(categoria);
-        viewHolder.tvDireccion.setText(direccion);
-        viewHolder.tvHorario.setText(horario);
-        viewHolder.tvEmail.setText(email);
+        viewHolder.tvProvincia.setText(provincia);
+
         return convertView;
     }
 

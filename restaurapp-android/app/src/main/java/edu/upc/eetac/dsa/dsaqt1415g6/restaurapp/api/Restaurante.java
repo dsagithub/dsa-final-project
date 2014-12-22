@@ -18,6 +18,9 @@ public class Restaurante {
     private String horario;
     private String categoria;
     private String creador;
+
+
+    private String eTag;
     private String provincia;
     private long creationTimeStamp;
 
@@ -118,7 +121,13 @@ public class Restaurante {
     public void setCreationTimeStamp(long creationTimeStamp) {
         this.creationTimeStamp = creationTimeStamp;
     }
+    public String getETag() {
+        return eTag;
+    }
 
+    public void setETag(String eTag) {
+        this.eTag = eTag;
+    }
     public Map<String, Link> getLinks() {
         return links;
     }

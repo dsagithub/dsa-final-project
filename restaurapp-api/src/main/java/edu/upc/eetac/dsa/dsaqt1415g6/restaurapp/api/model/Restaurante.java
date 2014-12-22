@@ -29,8 +29,9 @@ public class Restaurante {
 
 	@InjectLinks({
 			@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "create-restaurante", title = "Crear Restaurante", type = MediaType.RESTAURAPP_API_RESTAURATE),
-			@InjectLink(value = "/restaurantes/opinion/{idrestaurante}", style = Style.ABSOLUTE, rel = "opiniones_id", title = "Todas opiniones del restaurante", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "idrestaurante", value = "${instance.idrestaurante}") }),// $-->toda
-				})
+			@InjectLink(value = "/restaurantes/{idrestaurante}", style = Style.ABSOLUTE, rel = "self", title = "self-restaurante", type = MediaType.RESTAURAPP_API_RESTAURATE, bindings = { @Binding(name = "idrestaurante", value = "${instance.idrestaurante}")}),
+			@InjectLink(value = "/restaurantes/opinion/{idrestaurante}", style = Style.ABSOLUTE, rel = "opiniones_id", title = "Todas opiniones del restaurante", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "idrestaurante", value = "${instance.idrestaurante}") })})// $-->toda
+				
 	private List<Link> links;
 	private List<Opinion> opiniones;
 
