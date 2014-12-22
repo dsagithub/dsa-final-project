@@ -35,7 +35,7 @@ public class RestaurappAPI {
         AssetManager assetManager = context.getAssets();
         Properties config = new Properties();
         config.load(assetManager.open("config.properties"));
-        String urlHome = config.getProperty("restapp.home");
+        String urlHome = config.getProperty("restaurapp.home");
         url = new URL(urlHome);
 
         Log.d("LINKS", url.toString());

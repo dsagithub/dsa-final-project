@@ -36,6 +36,7 @@ import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.RestauranteCollection;
 
 
 
+
 @Path("/restaurantes")
 public class RestauranteResource {
 	
@@ -290,6 +291,83 @@ public class RestauranteResource {
 		return restaurante;
 	}
 	
+	
+	
+	private String GET_RESTAURATES_QUERY_BY_PARAMETROS = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest  and rest.categoria=? and rest.provincia=? order by  rest.idrestaurante desc limit ?";
+	private String GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest  and rest.categoria=? and rest.provincia=? and rest.idrestaurante > ? order by rest.idrestaurante desc";
+
+	
+	/*@GET
+	@Path("/search")
+	@Produces(MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION)
+	public RestauranteCollection buscarRestaurantes(
+			@QueryParam("categoria") String categoria,
+			@QueryParam("provincia") String provincia,
+			@QueryParam("length") int length,
+			@QueryParam("before") int before, 
+			@QueryParam("after") int after){
+		RestauranteCollection restaurantes = new RestauranteCollection();
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+
+		try {
+			boolean updateFromLast = after > 0;
+			System.out.println("Dentro del try con valor updateFromLast...."+ updateFromLast);
+
+			stmt = updateFromLast ? conn
+					.prepareStatement(GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS) : conn
+					.prepareStatement(GET_RESTAURATES_QUERY_BY_PARAMETROS);
+			if (updateFromLast) {
+				stmt.setInt(1, after);
+			}else{
+				length = (length <= 0) ? 8 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+				stmt.setInt(1, length);
+			}
+			
+			ResultSet rs = stmt.executeQuery();
+			boolean first = true;
+			long oldestTimestamp = 0;
+			while (rs.next()) {
+				Libros libro = new Libros();
+				libro.setLibroid(rs.getInt("libroid"));
+				libro.setAutor(rs.getString("name"));
+				libro.setIdautor(rs.getInt("idAuthor"));
+				libro.setDateCreation(rs.getTimestamp("DateCreation").getTime());
+				oldestTimestamp = rs.getTimestamp("DateImpresion").getTime();
+				libro.setDateImpresion(oldestTimestamp);
+				libro.setEdition(rs.getString("edition"));
+				libro.setEditorial(rs.getString("editorial"));
+				libro.setLanguage(rs.getString("language"));
+				libro.setTitle(rs.getString("title"));
+				if (first) {
+					first = false;
+					libros.setNewestTimestamp(libro.getDateImpresion());
+				}
+				libros.addLibros(libro);
+			}
+			libros.setOldestTimestamp(oldestTimestamp);
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+
+		return libros;
+	}
+	*/
 	
 	private String INSERT_RESTAURANTE_QUERY = "insert into restaurantes (nombre, direccion, telefono, email, horario, categoria, creador, provincia) values (?,?,?,?,?,?,?,?)";
 

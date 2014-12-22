@@ -29,7 +29,7 @@ public class UserResource {
 	private DataSource ds = DataSourceSPA.getInstance().getDataSource();
 	
 	
-	private String INSERT_USER_QUERY = "insert into users values(?, MD5(?),?,?,?,?)";
+	private String INSERT_USER_QUERY = "insert into users (username,userpass,nombre,email,provincia,foto)values(?, MD5(?),?,?,?,?)";
 
 	@POST
 	@Consumes(MediaType.RESTAURAPP_API_USER)
@@ -55,14 +55,13 @@ public class UserResource {
 			stmt.setString(3, usuario.getNombre());
 			stmt.setString(4, usuario.getEmail());
 			stmt.setString(5, usuario.getProvincia());
-			stmt.setString(7, usuario.getUbic_foto());
-
+			stmt.setString(6, usuario.getUbic_foto());
+			
 
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
-				int idrestaurante = rs.getInt(1);
-				usuario = getUserFromDatabase(Integer.toString(idrestaurante));
+				usuario = getUserFromDatabase(rs.getString("username"));
 
 
 			}
