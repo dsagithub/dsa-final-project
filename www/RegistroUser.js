@@ -1,12 +1,6 @@
-/* var API_BASE_URL = "C:\Users\Javier\Desktop\web\registro_user";
-*/
+ var API_BASE_URL = "";
 
 
-
-/*
-Details about repository of GitHub API 
-https://developer.github.com/v3/repos/
-*/
 
 $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
 
@@ -21,17 +15,50 @@ $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
 
    });
 
+
 $("#button_registro").click(function(e) {
-	e.preventDefault();
-    var nuevoGist;
-    if($('#nombre_registro').val()==""){
-    		$('<div class="alert alert-info"> Rellena el campo nombre </div>').appendTo
-    ($("#nombre_registro"));
+  e.preventDefault();
+    var nuevoUser;
+    if($('#nombre_registro').val()=="" || $('#apellidos_registro').val()=="" || $('#email_registro').val()=="" || $('#nombre_user_registro').val()=="" || $('#contraseña_registro').val()=="" ){
+        $('<div class="alert alert-info"> Rellena los campos descripcion y contenido</div>').appendTo
+    ($("#update_result"));
+    }else{
+    nuevoUser = {
+      "nombre" : $('#nombre_registro').val(),
+      "apellidos" : $('#apellidos_registro').val(),
+      "provincia" : $('#id_provincia').val(),
+      "correo" : $('#email_registro').val(),
+      "usuario" : $('#nombre_user_registro').val(),
+      "contraseña" : $('#contraseña_registro').val(),
+    
     }
-				
-			
-		
-		
-	}
+    crearUser(user);
+  }
+});
+
+
+
+function crearUser(user) {
+  var url = API_BASE_URL ;
+  var data = JSON.stringify(user);
+  $("#update_result").text('');
+  
+  $.ajax({
+    url : url,
+    type : 'POST',
+    crossDomain : true,
+    dataType : 'json',  
+    data : data,      
+    }).done(function(data, status, jqxhr) {
+    $('<div class="alert alert-success"> <strong>Ok!</strong> Usuario Creado!</div>').appendTo($("#update_result"));        
+    }).fail(function() {
+    $('<div class="alert alert-danger"> <strong>Oh!</strong> Error, usuario no creado</div>').appendTo($("#update_result"));
+  });   
+
+
+}
+
+
+
 );
 
