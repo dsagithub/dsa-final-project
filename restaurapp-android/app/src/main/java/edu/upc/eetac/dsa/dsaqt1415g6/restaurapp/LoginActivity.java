@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 
+
+
 public class LoginActivity extends Activity {
     private final static String TAG = LoginActivity.class.getName();
 
@@ -60,6 +62,10 @@ public class LoginActivity extends Activity {
             Log.d(TAG, "preferences not set. THIS A SEVERE PROBLEM");
 
         startLibrosActivity();
+    }
+
+    public void cancelar(View v){
+        finish();
     }
 
     private void startLibrosActivity() {
