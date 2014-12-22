@@ -1,5 +1,5 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".RestaurappMainActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".ListarOpinionesActivity">
+    <item android:id="@+id/opiniones" android:title="@string/opiniones"
         android:orderInCategory="100" android:showAsAction="never" />
 </menu>

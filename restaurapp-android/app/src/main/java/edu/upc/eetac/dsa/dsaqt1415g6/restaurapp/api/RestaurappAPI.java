@@ -64,7 +64,7 @@ public class RestaurappAPI {
             urlConnection.connect();
         } catch (IOException e) {
             throw new AppException(
-                    "Can't connect to Libro API Web Service");
+                    "Can't connect to Restaurantes API Web Service");
         }
 
         BufferedReader reader;
@@ -156,16 +156,16 @@ public class RestaurappAPI {
 
                     Opinion opinion = new Opinion();
                     JSONObject jsonOpinion = jsonOpiniones.getJSONObject(j);
-                    opinion.setFecha_estancia(jsonOpinion.getString("mes_estancia"));
-                    opinion.setCreation_timestamp(jsonOpinion.getLong("opinion_creation"));
+                    opinion.setFecha_estancia(jsonOpinion.getString("fecha_estancia"));
+                    opinion.setCreation_timestamp(jsonOpinion.getLong("creation_timestamp"));
                     opinion.setIdopinion(jsonOpinion.getInt("idopinion"));
-                    opinion.setIdrestaurante(jsonOpinion.getInt("idrest"));
-                    opinion.setNoutilidad(jsonOpinion.getInt("cont_noutilidad"));
+                    opinion.setIdrestaurante(jsonOpinion.getInt("idrestaurante"));
+                    opinion.setNoutilidad(jsonOpinion.getInt("noutilidad"));
                     opinion.setPuntuacion(jsonOpinion.getInt("puntuacion"));
                     opinion.setTexto(jsonOpinion.getString("texto"));
                     opinion.setTitulo(jsonOpinion.getString("titulo"));
                     opinion.setUsername(jsonOpinion.getString("username"));
-                    opinion.setUtilidad(jsonOpinion.getInt("cont_utilidad"));
+                    opinion.setUtilidad(jsonOpinion.getInt("utilidad"));
 
                     restaurante.addOpinion(opinion);
 
@@ -186,9 +186,156 @@ public class RestaurappAPI {
         return restaurantes;
     }
 
+    private Map<String, Restaurante> opinionesCache = new HashMap<String, Restaurante>();
+
+    public Restaurante getOpiniones(String urlRestaurante) throws AppException {
+        Restaurante opiniones = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(urlRestaurante);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            opiniones = opinionesCache.get(urlRestaurante);
+            String eTag = (opiniones == null) ? null : opiniones.getETag();
+            if (eTag != null)
+                urlConnection.setRequestProperty("If-None-Match", eTag);
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                Log.d(TAG, "CACHE");
+                return restauranteCache.get(urlRestaurante);
+            }
+            Log.d(TAG, "NOT IN CACHE");
+            opiniones = new Restaurante();
+            eTag = urlConnection.getHeaderField("ETag");
+            opiniones.setETag(eTag);
+            restauranteCache.put(urlRestaurante, opiniones);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            JSONObject jsonRestaurante = new JSONObject(sb.toString());
+            JSONArray jsonOpiniones = jsonRestaurante.getJSONArray("opiniones");
+
+            for(int j=0;j<jsonOpiniones.length();j++){
+                Opinion opinion = new Opinion();
+                JSONObject jsonOpinion = jsonOpiniones.getJSONObject(j);
+                opinion.setFecha_estancia(jsonOpinion.getString("fecha_estancia"));
+                opinion.setCreation_timestamp(jsonOpinion.getLong("creation_timestamp"));
+                opinion.setIdopinion(jsonOpinion.getInt("idopinion"));
+                opinion.setIdrestaurante(jsonOpinion.getInt("idrestaurante"));
+                opinion.setNoutilidad(jsonOpinion.getInt("noutilidad"));
+                opinion.setPuntuacion(jsonOpinion.getInt("puntuacion"));
+                opinion.setTexto(jsonOpinion.getString("texto"));
+                opinion.setTitulo(jsonOpinion.getString("titulo"));
+                opinion.setUsername(jsonOpinion.getString("username"));
+                opinion.setUtilidad(jsonOpinion.getInt("utilidad"));
+
+                opiniones.addOpinion(opinion);
+
+            }
+
+        } catch (MalformedURLException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Bad sting url");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Exception when getting the sting");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Exception parsing response");
+        }
+
+        return opiniones;
+    }
 
 
 
+
+    private Map<String, Restaurante> restauranteCache = new HashMap<String, Restaurante>();
+
+    public Restaurante getRestaurante(String urlRestaurante) throws AppException {
+        Restaurante restaurante = null;
+        HttpURLConnection urlConnection = null;
+        try {
+            URL url = new URL(urlRestaurante);
+            urlConnection = (HttpURLConnection) url.openConnection();
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+
+            restaurante = restauranteCache.get(urlRestaurante);
+            String eTag = (restaurante == null) ? null : restaurante.getETag();
+            if (eTag != null)
+                urlConnection.setRequestProperty("If-None-Match", eTag);
+            urlConnection.connect();
+            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
+                Log.d(TAG, "CACHE");
+                return restauranteCache.get(urlRestaurante);
+            }
+            Log.d(TAG, "NOT IN CACHE");
+            restaurante = new Restaurante();
+            eTag = urlConnection.getHeaderField("ETag");
+            restaurante.setETag(eTag);
+            restauranteCache.put(urlRestaurante, restaurante);
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(
+                    urlConnection.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            JSONObject jsonRestaurante = new JSONObject(sb.toString());
+            restaurante.setIdRestaurante(jsonRestaurante.getInt("idrestaurante"));
+            restaurante.setCategoria(jsonRestaurante.getString("categoria"));
+            restaurante.setCreador(jsonRestaurante.getString("creador"));
+            restaurante.setDireccion(jsonRestaurante.getString("direccion"));
+            restaurante.setCreationTimeStamp(jsonRestaurante.getLong("creationTime"));
+            restaurante.setEmail(jsonRestaurante.getString("email"));
+            restaurante.setHorario(jsonRestaurante.getString("horario"));
+            restaurante.setNombre(jsonRestaurante.getString("nombre"));
+            restaurante.setProvincia(jsonRestaurante.getString("provincia"));
+            restaurante.setTelefono(jsonRestaurante.getString("telefono"));
+            JSONArray jsonLinks = jsonRestaurante.getJSONArray("links");
+            parseLinks(jsonLinks, restaurante.getLinks());
+            JSONArray jsonOpiniones = jsonRestaurante.getJSONArray("opiniones");
+
+            for(int j=0;j<jsonOpiniones.length();j++){
+                Opinion opinion = new Opinion();
+                JSONObject jsonOpinion = jsonOpiniones.getJSONObject(j);
+                opinion.setFecha_estancia(jsonOpinion.getString("fecha_estancia"));
+                opinion.setCreation_timestamp(jsonOpinion.getLong("creation_timestamp"));
+                opinion.setIdopinion(jsonOpinion.getInt("idopinion"));
+                opinion.setIdrestaurante(jsonOpinion.getInt("idrestaurante"));
+                opinion.setNoutilidad(jsonOpinion.getInt("noutilidad"));
+                opinion.setPuntuacion(jsonOpinion.getInt("puntuacion"));
+                opinion.setTexto(jsonOpinion.getString("texto"));
+                opinion.setTitulo(jsonOpinion.getString("titulo"));
+                opinion.setUsername(jsonOpinion.getString("username"));
+                opinion.setUtilidad(jsonOpinion.getInt("utilidad"));
+
+                restaurante.addOpinion(opinion);
+
+            }
+
+        } catch (MalformedURLException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Bad sting url");
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Exception when getting the sting");
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new AppException("Exception parsing response");
+        }
+
+        return restaurante;
+    }
 
 
 

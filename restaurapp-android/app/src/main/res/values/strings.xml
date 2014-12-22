@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Restaurapp</string>
-    <string name="action_settings">Configuración</string>
+    <string name="opiniones">Opiniones</string>
     <string name="login_username">Usuario</string>
     <string name="login_password">Contraseña</string>
     <string name="welcome">Bienvenido a Restaurapp</string>

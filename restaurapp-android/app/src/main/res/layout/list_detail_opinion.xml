@@ -4,10 +4,17 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvNombre"
+        android:id="@+id/tvTitulo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dip"
+        android:layout_weight="0.5"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:gravity="right"
         android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 
@@ -17,19 +24,10 @@
         android:orientation="horizontal"
         android:paddingLeft="5dip"
         android:paddingRight="5dip">
-
         <TextView
-            android:id="@+id/tvCreador"
+            android:id="@+id/tvTexto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-        <TextView
-            android:id="@+id/tvProvincia"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="0.5"
-            android:gravity="right"
             android:textAppearance="?android:attr/textAppearanceMedium"/>
     </LinearLayout>
 
