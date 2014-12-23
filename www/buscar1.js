@@ -32,15 +32,11 @@ function getlistrest() {
 					var res1 = v;
 					$.each(res1, function(i, v) {
 						var restaurantes = v;
-								
-
+							
 					$('<h4> Name: ' + restaurantes.nombre + '</h4>').appendTo($('#restaurantes_result'));
 					$('<p>').appendTo($('#restaurantes_result'));	
 					
-					$('<strong> Provincia: </strong> ' + restaurantes.provincia + '<br>').appendTo($('#restaurantes_result'));
-					$('<strong> Telefono: </strong> ' + restaurantes.telefono + '<br>').appendTo($('#restaurantes_result'));
-					$('<strong> Opiniones: </strong> ' + restaurantes.opiniones + '<br>').appendTo($('#restaurantes_result'));
-					$('</p>').appendTo($('#restaurantes_result'));
+					
 				});
 				});
 
