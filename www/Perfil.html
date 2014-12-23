@@ -59,20 +59,14 @@
 </nav>
 
     
-       <div  ALIGN=right > 
-        
-        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
-        <input type="password" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
       
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label> <input type="text" id="id_password_login" name="label_id_password" />
-
-        <button>
-          <FONT color="green" size="2" id="button_buscar"> Log in </FONT>
-        </button>
-
-      </div>
     
 
+<br>
+<br>
+<br>
+<br>
+<br>
 <br>
 <br>
 <br>
@@ -257,9 +251,18 @@
           </center>
 		  <center>
             <button>
-              <FONT color="green" size="3" id="button_listar_todos"> LISTAR </FONT>
+              <FONT color="green" size="3" id="listar_mis_restaurantes"> Mis Restaurantes </FONT>
             </button>
           </center>
+		  <center>
+            <button>
+              <FONT color="green" size="3" id="boton_eliminar_restaurante"> Eliminar Restaurante </FONT>
+            </button>
+          </center>
+		  <div class="input-group input-group-sm">
+                  <span class="input-group-addon">id restaurante a eliminar</span> <input type="text"
+                    class="form-control" id="rest_delete">    
+                </div>
 		  <div class="panel-body">
                  <span id="listar_result"></span>
               </div>
@@ -273,7 +276,7 @@
         <div>
           <label for="label_crear_restaurante"> <b> <font color= "black">Tienes un restaurante y quieres que salga en nuestra web? Clica aqui!  </font> </b> </label>
           <button>
-              <FONT color="green" size="2" id="button_crear_restaurante"> Crear Restaurante </FONT>
+              <FONT color="green" size="2" id="button_crear_restaurante"><a href=RegistroRestaurante.html> Crear Restaurante</a> </FONT>
           </button>
         </div>
 <br>
@@ -292,7 +295,7 @@
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 
       <!-- Event and AJAX functions -->
-	  <script type="text/javascript" src="Inicio.js"></script>
+	  <script type="text/javascript" src="Perfil.js"></script>
 </body>
 
 </html>

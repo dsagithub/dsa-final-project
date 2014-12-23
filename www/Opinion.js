@@ -1,4 +1,4 @@
-var API_BASE_URL = "http://localhost:8080/restaurapp-api";
+var API_BASE_URL = "http://localhost:8080/restaurapp-api/restaurantes/opinion";
 var USERNAME = "xurtasun";
 var PASSWORD = "urtasun";
 
@@ -25,34 +25,35 @@ $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
 
 
 
-$("#button_registro").click(function(e) {
+$("#boton_comentario").click(function(e) {
   e.preventDefault();
     var newRest;
-    if($('#categoria_registro').val()=="" || $('#user_registro').val()=="" || $('#direccion').val()==""|| $('#email_registro').val()==""|| $('#direccion').val()==""|| $('#direccion').val()=="" || $('#telefono').val()=="" ){
+    if($('#nombre_restaurante').val()=="" || $('#titulo_opinion').val()=="" || $('#nombre_user').val()==""|| $('#fecha_estancia').val()==""|| $('#horario').val()==""|| $('#telefono_restaurante').val()=="" || $('#provincia_restaurante').val()=="" ){
         $('<div class="alert alert-info"> Rellena todos los campos </div>').appendTo
     ($("#create_result"));
     }else{
     newRest = {
-      "categoria" : $('#categoria_registro').val(),
-      "creador" : $('#user_registro').val(),
-      "direccion" : $('#direccion').val(),
-      "email" : $('#email_registro').val(),
-      "horario" : $('#horario_registro').val(),
-      "nombre" : $('#restaurante_registro').val(),
-	  "provincia" : $('#provincia_registro').val(),
-      "telefono" : $('#telefono').val(),
+      "titulo" : $('#nombre_restaurante').val(),
+      "puntuacion" : $('#puntuacion_restaurante').val(),
+      "username" : $('#nombre_user').val(),
+      "fecha_estancia" : $('#fecha_estancia').val(),
+      "horario" : $('#horario').val(),
+      "nombre" : $('#nombre_restaurante').val(),
+	  "provincia" : $('#provincia_restaurante').val(),
+      "telefono" : $('#telefono_restaurante').val(),
+	  "texto" : $('#opinion_restaurante').val(),
       
     }
-    createRest(newRest);
+    createOpinion(newRest);
   }
 });
 
 
-
+	/* var url = API_BASE_URL + '/' + id_restaurante; */
+	
   
-  
-  function createRest(restaurante) {
-  var url = API_BASE_URL  + '/restaurantes';
+  function createOpinion(restaurante) {
+  var url = API_BASE_URL  + '/20';
   var data = JSON.stringify(restaurante);
   $("#create_result").text('');
   
@@ -60,8 +61,8 @@ $("#button_registro").click(function(e) {
     url : url,
     type : 'POST',
     crossDomain : true,
-    dataType : 'application/vnd.restaurapp.api.restaurante+json',  
-    contentType : 'application/vnd.restaurapp.api.restaurante+json',
+    dataType : 'application/vnd.restaurapp.api.opinion+json',  
+    contentType : 'application/vnd.restaurapp.api.opinion+json',
     data : data,      
     }).done(function(data, status, jqxhr) {
     $('<div class="alert alert-success"> <strong>Ok!</strong> Restaurante Creado!</div>').appendTo($("#create_result"));        
