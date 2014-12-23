@@ -4,7 +4,8 @@
 	<meta charset="utf-8"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<title>RestaurApp</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> 
+	
+	
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -37,9 +38,9 @@
 
 		 <div class="collapse navbar-collapse navbar-right" id="bs-ML-navbar-collapse-1"> <! para que cuando lo uses en tablets o reduzcas el tamaño de la pantalla funcione correctamente (COLLAPSE) >
 			<ul class="nav navbar-nav nav-tabs">  <!ponemos la barra de navegación con los links  // nav-tabs para que se vea mejor mas sofisticado>
-				<li><a href="Inicio.html">Pagina Inicio</a></li>
-				<li><a href="Acercade.html">Acerca de</a></li>
-				<li><a href="contacto.html">Contacto</a></li>
+				<li><a href="index.html">Pagina Inicio</a></li>
+				<li><a href="C:\Users\Administrador\Desktop\Bootstrap\githubpaginado.html">Acerca de</a></li>
+				<li><a href="index.html">Contacto</a></li>
 				  <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nombre User <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -222,6 +223,9 @@
              </div>
           </div>
 
+      
+
+
           <label for="label_buscar_tipo_restaurante"> <b> <font color= "black">Tipo de Cocina: </font> </b> </label>
 
             <div class="container">
@@ -247,11 +251,18 @@
 <br>
 <br>
           <center>
-              <a href="Buscar1.html" target="_parent">
-                <button>
-                  <FONT color="green" size="3" id="button_buscar"> BUSCAR </FONT>
-                </button></a>
+            <button>
+              <FONT color="green" size="3" id="button_buscar"> BUSCAR </FONT>
+            </button>
           </center>
+		  <center>
+            <button>
+              <FONT color="green" size="3" id="button_listar_todos"> LISTAR </FONT>
+            </button>
+          </center>
+		  <div class="panel-body">
+                 <span id="listar_result"></span>
+              </div>
         </div>
 
 <br>
@@ -259,14 +270,20 @@
 <br>
 <br>
 
-            <div class="alert alert-warning alert-dismissable">
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <center>
-              <strong>¡Atención!</strong> Si eres restaurador y tienes un restaurante, <a class="alert-link" href="RegistroRestaurante.html" target="_parent"> Clica Aquí!</a>.
-            </center>
-            </div>
-
+        <div>
+          <label for="label_crear_restaurante"> <b> <font color= "black">Tienes un restaurante y quieres que salga en nuestra web? Clica aqui!  </font> </b> </label>
+          <button>
+              <FONT color="green" size="2" id="button_crear_restaurante"> Crear Restaurante </FONT>
+          </button>
+        </div>
 <br>
+<br>
+<br>
+<br>
+
+
+
+
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -275,7 +292,7 @@
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 
       <!-- Event and AJAX functions -->
-      <script type="text/javascript" src ="Inicio.js"></script>
+	  <script type="text/javascript" src="Inicio.js"></script>
 </body>
 
 </html>
