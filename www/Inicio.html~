@@ -247,7 +247,7 @@
 <br>
 <br>
           <center>
-              <a href="Listar.html" target="_parent">
+              <a href="Buscar1.html" target="_parent">
                 <button>
                   <FONT color="green" size="3" id="button_buscar"> BUSCAR </FONT>
                 </button></a>

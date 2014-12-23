@@ -30,7 +30,7 @@
       </button>
 
 
-		<a class="navbar-brand" href="#"><img src="C:\Users\ManuelLeiva\dsa-final-project\dsa-final-project\www\logo5.png" border="0" height="180" width="260"></a> <! la barra de navegacion >
+		<a class="navbar-brand" href="#"><img src="logo5.png" border="0" height="180" width="260"></a> <! la barra de navegacion >
 		</div>
 
 
@@ -72,10 +72,10 @@
           <div class="col-sm-8">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <h3 class="panel-title">List Restaurantes</h3>
+                <h3 class="panel-title">Lista Restaurantes</h3>
               </div>
-              <div class="list-group">
-                 <a href="#" class="list-group-item active" id="restaurantes_result">  </a>
+              <div class="list-group" id="restaurantes_result">
+                
               </div>
 
           
@@ -84,9 +84,14 @@
           </div><!-- /.col-sm-8 -->
 
           <div class="col-sm-4">
-            <button type="button" class="btn btn-info" id="button_list_rest">List Restaurantes</button>
+            <button type="button" class="btn btn-info" id="button_list_rest">Lista Restaurantes</button>
+		<script type="text/javascript">
+			window.location="Buscar.html?num=28400";
+		</script>
           </div>  
         </div>
+
+
 
 
 
@@ -101,7 +106,7 @@
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 
       <!-- Event and AJAX functions -->
-      <script type="text/javascript" src ="Buscar1.js"></script>
+      <script type="text/javascript" src ="listar.js"></script>
 </body>
 
 </html>
