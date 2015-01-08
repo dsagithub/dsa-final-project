@@ -88,14 +88,23 @@
           </div><!-- /.col-sm-8 -->
       </div>   
 
+      <form action="http://maps.google.com/maps" method="get" target="blank">
+          Introduce tu dirección:
+          <input type="text" name="saddr" />
+          <input type="hidden" name="daddr" value=" Esteve Terradas 7, Castelldefels, Barcelona" />
+          <input type="submit" value="Buscar Ruta" />
+      </form>
+<br>
+<br>
       <div align="right">
           <script src="http://maps.googleapis.com/maps/api/js"></script>
           <script>
           function initialize() {
             var mapProp = {
-              center:new google.maps.LatLng(51.508742,-0.120850),
-              zoom:5,
+              center:new google.maps.LatLng(41.3968997,1.8347167,10),
+              zoom:9,
               mapTypeId:google.maps.MapTypeId.ROADMAP
+              
             };
             var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
           }
@@ -119,6 +128,9 @@
 
       <!-- Event and AJAX functions -->
       <script type="text/javascript" src ="detalles.js"></script>
+
+      <script src="http://maps.googleapis.com/maps/api/js"></script>
+
 </body>
 
 </html>
