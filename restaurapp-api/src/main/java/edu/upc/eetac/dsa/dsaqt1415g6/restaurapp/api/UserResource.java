@@ -168,7 +168,7 @@ public class UserResource {
 		User user = new User();
 	
 		try {
-			user = getUserFromDatabase(username);
+			user = getUserFromDatabase(username,true);
 			
 			if(user.getPassword()==usuario.getPassword()){
 				user.setLoginSuccesful(true);
