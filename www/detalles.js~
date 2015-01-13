@@ -38,3 +38,44 @@ function getdetailrestaurante() {
 	});
 
 }
+
+function getlistrest() {
+
+	var url = API_BASE_URL +'/opinion/'+idrestaurante;
+
+	$("#restaurante_result_opinion").text('');
+	
+	$.ajax({
+		url : url,
+		type : 'GET',
+		crossDomain : true,
+		dataType : 'json',
+	}).done(function(data, status, jqxhr) {
+				var big = data;
+
+				$.each(big, function(i, v) {
+
+					var opiniones = v;
+						$.each(opiniones, function(i, v) {
+							var opinion = v;
+							console.log(opinion.titulo);
+
+							if (opinion.titulo == null){
+							}
+							else {	
+							$('<strong>' + opinion.titulo + '</strong>').appendTo($('#restaurantes_result'));
+							$('<p>').appendTo($('#restaurantes_result'));	
+							$('<h6>' + opinion.username + '</h6>').appendTo($('#restaurantes_result'));
+							$('<h6>' + opinion.puntuacion + '</h6>').appendTo($('#restaurantes_result'));
+							}
+					
+					});
+				});
+
+	}).fail(function() {
+		$("#restaurantes_result").text("No gists.");
+	});
+
+}
+
+

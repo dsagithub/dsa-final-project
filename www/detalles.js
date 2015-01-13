@@ -9,6 +9,8 @@ $.ajaxSetup({
 idrestaurante = location.search.substring(1,location.search.length);
 console.log(idrestaurante);
 getdetailrestaurante();
+getlistrest();
+
 
 
 function getdetailrestaurante() {
@@ -38,3 +40,44 @@ function getdetailrestaurante() {
 	});
 
 }
+
+function getlistrest() {
+
+	var url = API_BASE_URL +'/opinion/'+idrestaurante;
+
+	$("#restaurante_result_opinion").text('');
+	
+	$.ajax({
+		url : url,
+		type : 'GET',
+		crossDomain : true,
+		dataType : 'json',
+	}).done(function(data, status, jqxhr) {
+				var big = data;
+
+				$.each(big, function(i, v) {
+
+					var opiniones = v;
+						$.each(opiniones, function(i, v) {
+							var opinion = v;
+							console.log(opinion.titulo);
+
+							if (opinion.titulo == null){
+							}
+							else {	
+							$('<strong>' + opinion.titulo + '</strong>').appendTo($('#restaurante_result_opinion'));
+							$('<p>').appendTo($('#restaurante_result_opinion'));	
+							$('<h6>' + opinion.username + '</h6>').appendTo($('#restaurante_result_opinion'));
+							$('<h6>' + opinion.puntuacion + '</h6>').appendTo($('#restaurante_result_opinion'));
+							}
+					
+					});
+				});
+
+	}).fail(function() {
+		$("#restaurante_result_opinion").text("No hay opiniones.");
+	});
+
+}
+
+

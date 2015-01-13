@@ -4,6 +4,7 @@
   <meta charset="utf-8"> 
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
   <title>RestaurApp</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet"> 
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -12,12 +13,13 @@
 
 </head>
 <body style="background:#94F4A3">
+  
 
   <! hacemos las barras de navegación>
 
 
 <nav class="navbar" role="navigation">
-  <div class="container-fluid">  <! Tenemos un gap por usar el normal container el fluid lo acerca a la izquierda. Revisar >
+  <div class="container-fluid">  <! Tenemos un gap por usar el normal container el fluid lo acerca a la izquierda >
      <div class="navbar-header"> <! Esta clase con el button trabaja con el collapse y hace que cuando la ventana se haga más pequeña salan los icon-bar que son pestañas cuando reduces la ventana>
 
       <button type="button" class="navbar-toggle collapsed " data-toggle="collapse" data-target="#bs-ML-navbar-collapse-1">
@@ -28,7 +30,7 @@
       </button>
 
 
-    <a class="navbar-brand" href="#"><img src="logo5.png" border="0" height="180" width="260"></a> <! la barra de navegacion >
+    <a class="navbar-brand" href="#"><img src="C:\Users\ManuelLeiva\dsa-final-project\dsa-final-project\www\logo5.png" border="0" height="180" width="260"></a> <! la barra de navegacion >
     </div>
 
 
@@ -56,72 +58,22 @@
 </nav>
 
     
-       <div  ALIGN=right > 
-        
-        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
-        <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
-      
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label> <input type="text" id="id_password_login" name="label_id_password" />
-
-        <button>
-          <FONT color="green" size="2" id="button_buscar"> Log in </FONT>
-        </button>
-
-      </div>
-<br>
-<br>
-<br>
-<br>
-<br>
-      <div >
-          <div class="col-sm-4" >
-            
-            
-          </div><!-- /.col-sm-8 -->
-          <div class="col-sm-4" >
-            <div class="panel panel-default">
-              <div class="panel-heading" align = "center">
-                <h3 class="panel-title">Información del restaurante</h3>
-              </div>
-              <div class="panel-body" id= "restaurante_result_detail"></div>  
-            </div>
-          </div><!-- /.col-sm-8 -->
-      </div>   
-
-      <div align="right">
-          <script src="http://maps.googleapis.com/maps/api/js"></script>
-          <script>
-          function initialize() {
-            var mapProp = {
-              center:new google.maps.LatLng(51.508742,-0.120850),
-              zoom:5,
-              mapTypeId:google.maps.MapTypeId.ROADMAP
-            };
-            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
-          }
-          google.maps.event.addDomListener(window, 'load', initialize);
-          </script>
-          </head>
-
-          <body>
-          <div id="googleMap" style="width:300px;height:280px;"></div>
-          </body>
-      </div>
 
 
-<br>
-<br>
-<br>
-	<div class="col-sm-4" >
-            <div class="panel panel-default">
-              <div class="panel-heading" align = "center">
-                <h3 class="panel-title">Opiniones</h3>
-              </div>
-              <div class="panel-body" id= "restaurante_result_opinion"></div>  
-            </div>
-          </div><!-- /.col-sm-8 -->
-          
 
+
+
+
+
+
+
+    
+
+
+
+
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.min.js"></script> 
 
 
       <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -131,7 +83,6 @@
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 
       <!-- Event and AJAX functions -->
-      <script type="text/javascript" src ="detalles.js"></script>
 </body>
 
 </html>

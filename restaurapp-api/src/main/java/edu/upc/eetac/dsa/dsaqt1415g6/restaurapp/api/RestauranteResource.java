@@ -595,6 +595,75 @@ public class RestauranteResource {
 		return opinion;
 	}
 	
+	
+	private String GET_OPINIONES_BY_IDRESTAURANTE = "select * from opiniones where idrest=?";
+	
+	@GET
+	@Path("/opinion/{idrestaurante}")
+	@Produces(MediaType.RESTAURAPP_API_OPINION)
+	public Restaurante getOpiniones(@PathParam("idrestaurante") String idrestaurante) {
+		
+		Restaurante opiniones = new Restaurante();
+		
+		System.out.println("Dentro de la funcion GET....");
+
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+		System.out.println("Conectado a la BD....");
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_OPINIONES_BY_IDRESTAURANTE);
+			stmt.setInt(1, Integer.parseInt(idrestaurante));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				Opinion opinion = new Opinion();
+				
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
+				
+				
+				opiniones.addOpinion(opinion);
+			}
+
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		System.out.println("returning");
+
+		return opiniones;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	private String GET_OPINION_BY_ID_QUERY = "select * from opiniones where idopinion=?";
 
 	
