@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.sql.DataSource;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -17,6 +18,8 @@ import javax.ws.rs.ServerErrorException;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+
+import org.apache.commons.codec.digest.DigestUtils;
 
 import edu.upc.eetac.dsa.dsaqt1415g6.restaurapp.api.model.User;
 
@@ -34,6 +37,7 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.RESTAURAPP_API_USER)
 	@Produces(MediaType.RESTAURAPP_API_USER)
+	
 	public User createUser(User usuario) {
 
 		System.out.println("Creando usuario....");
@@ -61,7 +65,7 @@ public class UserResource {
 			stmt.executeUpdate();
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
-				usuario = getUserFromDatabase(rs.getString("username"));
+				usuario = getUserFromDatabase(rs.getString("username"), true);
 
 
 			}
@@ -83,7 +87,7 @@ public class UserResource {
 	
 	private String GET_USER_BY_USERNAME = "select * from users where username=?";
 
-	private User getUserFromDatabase(String username) { // GET AUTHOR DATABASE
+	private User getUserFromDatabase(String username, boolean password) { // GET AUTHOR DATABASE
 
 		User usuario = new User();
 
@@ -126,6 +130,32 @@ public class UserResource {
 		}
 		return usuario;
 
+	}
+	
+	
+	/*
+	 * Manu parte de login
+	 */
+	
+	@Path("/login")
+	@POST
+	@Produces(MediaType.RESTAURAPP_API_USER)
+	@Consumes(MediaType.RESTAURAPP_API_USER)
+	public User login(User user) {
+		System.out.println("Entramos al metodo");
+		if (user.getUsername() == null || user.getUserpass() == null)
+			throw new BadRequestException(
+					"username and password cannot be null.");
+
+		String pwdDigest = DigestUtils.md5Hex(user.getUserpass()); //calculamos el md5 de la contraseña
+		String storedPwd = getUserFromDatabase(user.getUsername(), true) //nos devuelve el pasword en md5 y en hexadecimal y se puede comparar con el de la base de datos y que sean iguales
+				.getUserpass();
+		
+		user.setLoginSuccessful(pwdDigest.equals(storedPwd)); //ponemos el atributo de login si es true o false si coinciden
+		 
+		user.setUserpass(null); //cuando nos pasan el user, de manera que la contraseña no aparece
+		System.out.println("Usuario logueado");
+		return user;
 	}
 	
 	
