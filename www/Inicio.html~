@@ -41,7 +41,7 @@
 				<li><a href="Acercade.html">Acerca de</a></li>
 				<li><a href="contacto.html">Contacto</a></li>
 				  <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login">No estas Logeado<span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login"><span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Link1</a></li>
             <li><a href="#">Link1</a></li>
