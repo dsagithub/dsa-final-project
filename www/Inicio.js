@@ -1,13 +1,31 @@
-var API_BASE_URL = "http://localhost:8080/restaurapp-api/";
-var USERNAME ; 
+var API_BASE_URL = "http://localhost:8000/restaurapp-api/";
+
+var login = false;
+var usernameLogin;
+
+getLogin();
+
+function getLogin(){
+
+	if (login==true){
+
+	$("<b>"+ usernameLogin +" </b>").appendTo($("#name_login"));	
+	
+	}
+	if (login==false){
+	
+	$("<b> No estás Logeado</b>").appendTo($("#name_login"));
+
+	}	
+}
 
 
 $("#button_login").click(function(e) {
    e.preventDefault();
    
    var login = new Object();
-   login.username=$('#label_id_nombre').val();
-   login.userpass=$('#id_password_login').val();
+   login.username=$('#id_nombre_login').val();
+   login.password=$('#id_password_login').val();
 
    Login(login);
 });
@@ -21,7 +39,7 @@ $("#button_registrarse").click(function(e) {
 
 
 function Login(login){
-   var url= API_BASE_URL + '/users/login';
+   var url= API_BASE_URL + 'users/login';
    var data = JSON.stringify(login);
    console.log(data);
    
@@ -30,22 +48,21 @@ function Login(login){
       type:'POST',
       crossDomain: true,
       dataType:'json',
-      contentType: '',
+      contentType: 'application/vnd.restaurapp.api.user+json',
       data: data,
    }).done(function(data, status, jqxhr) {
-            var info= data;
-            console.log(info);
-            console.log(info.loginSuccessful);
-            if (info.loginSuccessful == true){
-               $.cookie('username', info.username);
-               $.cookie('username');
-                     console.log(info.loginSuccessful);
-   
-            window.location.replace('Inicio.html');
-
+            console.log(data);
+            console.log(data.loginSuccesful);
+            if (data.loginSuccesful == true){
+		
+		login = data.loginSuccesful;
+		usernameLogin = data.username;
+                console.log(login);
+		$("<b>"+ data.username +" </b>").appendTo($("#name_login"));   
             }
-            else {      alert('contraseña incorrecta'); 
-               console.log(info.loginSuccessful);
+            else {      
+		alert('contraseña incorrecta'); 
+                console.log(data.loginSuccesful);
                         
             
          }

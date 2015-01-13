@@ -41,7 +41,7 @@
 				<li><a href="Acercade.html">Acerca de</a></li>
 				<li><a href="contacto.html">Contacto</a></li>
 				  <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nombre User <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login">No estas Logeado<span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#">Link1</a></li>
             <li><a href="#">Link1</a></li>
@@ -58,15 +58,24 @@
 </nav>
 
     
+
+
        <div  ALIGN=right > 
         
         <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
-        <input type="password" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
+        <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
       
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label> <input type="text" id="id_password_login" name="label_id_password" />
+        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label>
+	 <input type="password" id="id_password_login" name="label_id_password" />
 
         <button>
-          <FONT color="green" size="2" id="button_buscar"> Log in </FONT>
+          <FONT color="green" size="2" id="button_login"> Log in </FONT>
+        </button>
+<br>
+<br>
+<br>
+        <button>
+          <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
         </button>
 
       </div>
@@ -247,7 +256,7 @@
 <br>
 <br>
           <center>
-              <a href="Buscar1.html" target="_parent">
+              <a href="Listar.html" target="_parent">
                 <button>
                   <FONT color="green" size="3" id="button_buscar"> BUSCAR </FONT>
                 </button></a>
