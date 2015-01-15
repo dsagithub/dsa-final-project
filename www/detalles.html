@@ -10,9 +10,16 @@
 
       <!-- Optional theme -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
+	<link rel="shortcut icon" href="imagenes-web/logo5.png" type="image/png" />
 </head>
-  <body style="background:#94F4A3" onload="getRestauranteDetail()">
+
+<style>
+		body {
+		background-image: url("imagenes-web/FoodEgg.jpg");
+		
+			}
+</style>
+  <body  onload="getRestauranteDetail()">
   
 
   <nav class="navbar" role="navigation">
@@ -29,19 +36,13 @@
 
      <div class="collapse navbar-collapse navbar-right" id="bs-ML-navbar-collapse-1">
        <ul class="nav navbar-nav nav-tabs"> 
-          <li><a href="Inicio.html">Pagina Inicio</a></li>
+          <li><a href="Inicio.html" >Pagina Inicio</a></li>
           <li><a href="Acercade.html">Acerca de</a></li>
           <li><a href="contacto.html">Contacto</a></li>
           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login"><span class="caret"></span></a>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login">No estas logeado<span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
-              <li><a href="#">Link1</a></li>
-              <li><a href="#">Link1</a></li>
-              <li><a href="#">Link1</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Mi perfil</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Desconectarse</a></li>
+              <li id="logout"><a href="#">Desconectarse</a></li>
            </ul>
          </li>
        </ul>
@@ -62,9 +63,7 @@
         <button>
           <FONT color="green" size="2" id="button_login"> Log in </FONT>
         </button>
-<br>
-<br>
-<br>
+
         <button>
           <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
         </button>

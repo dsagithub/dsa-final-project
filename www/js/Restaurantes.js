@@ -157,7 +157,7 @@ function Login(login){
             if (data.loginSuccesful == true){
 		
          		document.cookie="username = " + data.username;
-               document.cookie="BoolLogin = " + data.loginSuccesful;
+            document.cookie="BoolLogin = " + data.loginSuccesful;
 
          		$("#name_login").text('');
          		$("<b>"+ getCookie("username") +" </b>").appendTo($("#name_login"));   
@@ -291,7 +291,6 @@ function getlistopinion() {
                         $('<p>').appendTo($('#restaurante_result_opinion')); 
                         $('<h6> Usuario: ' + opinion.username + '</h6>').appendTo($('#restaurante_result_opinion'));
                         $('<h6> Puntuacion: '+ opinion.puntuacion + '</h6>').appendTo($('#restaurante_result_opinion'));
-                        $('<button> <FONT color="orange" size="1" id="button_like"> LIKE </FONT></button>  <button> <FONT color="red" size="1" id="button_unlike"> UNLIKE </FONT></button>').appendTo($('#restaurante_result_opinion'));
                         $('<p>').appendTo($('#restaurante_result_opinion')); 
 
                      }
@@ -415,7 +414,7 @@ function crearUser(user) {
     }).done(function(data, status, jqxhr) {
          alert('Listo!! Ya te puedes logear!')    
     }).fail(function() {
-         alert('Registro de usuaria fallido, pongase en contacto con los administradores!')
+         alert('Registro de usuaria fallido, nombre de usuario ya existente!')
   });   
 
 
