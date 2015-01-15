@@ -59,7 +59,7 @@ public class UserResource {
 			stmt.setString(3, usuario.getNombre());
 			stmt.setString(4, usuario.getEmail());
 			stmt.setString(5, usuario.getProvincia());
-			stmt.setString(6, usuario.getUbic_foto());
+			stmt.setString(6, "my_photo.jpg");
 			
 
 			stmt.executeUpdate();

@@ -65,15 +65,52 @@ $("#boton_registrar_restaurante").click(function(e) {
    var restaurante = new Object();
    restaurante.nombre=$('#nombre_rest').val();
    restaurante.direccion=$('#direccion_rest').val();
-   restaurante.nombre=$('#email_1_restaurante').val();
-   restaurante.direccion=$('#telefono_restaurante').val();
-   restaurante.nombre=$('#horario_restaurante').val();
-   restaurante.direccion=$('#categoría_restaurante').val();
+   restaurante.email=$('#email_rest').val();
+   restaurante.telefono=$('#telefono_rest').val();
+   restaurante.horario=$('#horario_rest').val();
+   restaurante.categoria=$('#categoria_rest').val();
+   restaurante.provincia=$('#provincia_rest').val();
 
    registrarRestaurante(restaurante);
 
 });
 
+$("#button_nueva_opinion").click(function(e) {
+   e.preventDefault();
+
+   var opinion = new Object();
+
+   opinion.titulo =$('#id_titulo_opinion').val();
+   opinion.puntuacion =$('#id_puntuacion_opinion').val();
+   opinion.username = getCookie("username");
+   opinion.texto = $('#id_texto_opinion').val();
+   opinion.fecha_estancia = $('#id_mes_estancia').val();
+
+   createOpinion(opinion);
+});
+
+$("#button_registrarse").click(function(e) {
+   e.preventDefault();
+   window.location.replace('RegistroUser.html');
+});
+
+$("#boton_nuevo_user").click(function(e) {
+  e.preventDefault();
+    var nuevoUser = new Object();
+    if($('#name_nuevo').val()=="" || $('#username_nuevo').val()=="" || $('#email_nuevo').val()=="" || $('#userpass_nuevo').val()=="" || $('#provincia_nuevo').val()==""){
+        alert('Todos los campos son obligatorios!!')   
+    }
+    else{
+      nuevoUser.nombre = $('#name_nuevo').val();
+      nuevoUser.username = $('#username_nuevo').val();
+      nuevoUser.email = $('#email_nuevo').val();
+      nuevoUser.password = $('#userpass_nuevo').val();
+      nuevoUser.provincia = $('#provincia_nuevo').val();
+
+
+    }
+    crearUser(nuevoUser);
+  });
 
 function getLogin(){
    console.log("LOGIN2");
@@ -92,10 +129,9 @@ function getLogin(){
    $("#div_tohide").hide(50);   
    
    }
-   if (Boologin=="false"){
+   else{
    $("#name_login").text('');
    $("<b> No estás Logeado</b>").appendTo($("#name_login"));
-
    }  
 }
 
@@ -119,12 +155,12 @@ function Login(login){
                document.cookie="BoolLogin = " + data.loginSuccesful;
 
          		$("#name_login").text('');
-         		$("<b>"+ data.username +" </b>").appendTo($("#name_login"));   
+         		$("<b>"+ getCookie("username") +" </b>").appendTo($("#name_login"));   
                $("#div_tohide").hide(50);   
 
             }
             else {      
-		alert('contraseña incorrecta'); 
+		alert('Usuario o contraseña incorrectos'); 
                 console.log(data.loginSuccesful);
                         
             
@@ -132,7 +168,7 @@ function Login(login){
        
 
    }).fail(function() {
-       alert('Username o contraseña incorrectos');  
+       alert('Usuario o contraseña incorrectos');  
    });
 
 
@@ -240,6 +276,9 @@ function getlistopinion() {
                         $('<p>').appendTo($('#restaurante_result_opinion')); 
                         $('<h6> Usuario: ' + opinion.username + '</h6>').appendTo($('#restaurante_result_opinion'));
                         $('<h6> Puntuacion: '+ opinion.puntuacion + '</h6>').appendTo($('#restaurante_result_opinion'));
+                        $('<button> <FONT color="orange" size="1" id="button_like"> LIKE </FONT></button>  <button> <FONT color="red" size="1" id="button_unlike"> UNLIKE </FONT></button>').appendTo($('#restaurante_result_opinion'));
+                        $('<p>').appendTo($('#restaurante_result_opinion')); 
+
                      }
                
                 });
@@ -306,7 +345,7 @@ function registrarRestaurante(restaurante){
       data: data,
    }).done(function(data, status, jqxhr) {
 
-               alert('El restaurante se ha registrado correctamente, para verlo entre en '+ url +'/'+ data.idrestaurante); 
+               alert('El restaurante se ha registrado correctamente, para verlo entre en http://localhost/detalles.html?@'+data.idrestaurante); 
                  
 
    }).fail(function() {
@@ -315,6 +354,58 @@ function registrarRestaurante(restaurante){
 
 
 }
+
+  function createOpinion(opinion) {
+  var url = API_BASE_URL  + 'restaurantes/opinion/'+idrestaurante;
+  var data = JSON.stringify(opinion);
+  
+  if(getCookie("username")== ""){
+
+   alert('No estas logeado');
+         
+    }
+    else{
+      $.ajax({
+       url : url,
+       type : 'POST',
+       crossDomain : true,
+       dataType : 'json',  
+       contentType : 'application/vnd.restaurapp.api.opinion+json',
+       data : data,      
+       }).done(function(data, status, jqxhr) {
+
+         getlistopinion();
+
+       }).fail(function() {
+         alert('No estas autorizado');
+     }); 
+
+    }
+
+
+};
+
+
+function crearUser(user) {
+  var url = API_BASE_URL + 'users';
+  var data = JSON.stringify(user);
+  
+    $.ajax({
+    url : url,
+    type : 'POST',
+    crossDomain : true,
+    dataType : 'json',  
+    contentType : 'application/vnd.restaurapp.api.user+json',
+    data : data,      
+    }).done(function(data, status, jqxhr) {
+         alert('Listo!! Ya te puedes logear!')    
+    }).fail(function() {
+         alert('Registro de usuaria fallido, pongase en contacto con los administradores!')
+  });   
+
+
+};
+
 
 
 
