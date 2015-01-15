@@ -1,4 +1,4 @@
-var API_BASE_URL = "http://localhost:8000/restaurapp-api/";
+var API_BASE_URL = "http://147.83.7.157:8080/restaurapp-api/";
 
 var usernameLogin = getCookie("username");
 var userpass = getCookie("userpass")
