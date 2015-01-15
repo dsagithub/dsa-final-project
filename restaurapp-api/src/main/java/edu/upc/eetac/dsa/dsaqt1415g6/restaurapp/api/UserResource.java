@@ -37,7 +37,6 @@ public class UserResource {
 	@POST
 	@Consumes(MediaType.RESTAURAPP_API_USER)
 	@Produces(MediaType.RESTAURAPP_API_USER)
-	
 	public User createUser(User usuario) {
 
 		System.out.println("Creando usuario....");
@@ -61,13 +60,16 @@ public class UserResource {
 			stmt.setString(5, usuario.getProvincia());
 			stmt.setString(6, "my_photo.jpg");
 			
+			
+			
 
 			stmt.executeUpdate();
+			
+			insertUserRoles(usuario.getUsername());
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
 				usuario = getUserFromDatabase(rs.getString("username"), true);
-
-
+				
 			}
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
@@ -81,6 +83,42 @@ public class UserResource {
 			}
 		}
 		return usuario;
+	}
+	
+	private String INSERT_ROLE_NAME = "insert into user_roles (username,rolename ) values(?,'registered')";
+
+	
+	private void insertUserRoles(String username){
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(INSERT_ROLE_NAME,
+					Statement.RETURN_GENERATED_KEYS);
+
+			stmt.setString(1, username);
+			stmt.executeUpdate();
+			
+
+
+
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
 	}
 	
 	

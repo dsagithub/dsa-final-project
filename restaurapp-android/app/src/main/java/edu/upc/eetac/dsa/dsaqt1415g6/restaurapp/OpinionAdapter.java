@@ -42,6 +42,9 @@ public class OpinionAdapter extends BaseAdapter{
         TextView tvTitulo;
         TextView tvUsername;
         TextView tvTexto;
+        TextView tvPuntuacion;
+
+
     }
 
     @Override
@@ -56,6 +59,8 @@ public class OpinionAdapter extends BaseAdapter{
                     .findViewById(R.id.tvUsername);
             viewHolder.tvTexto = (TextView) convertView
                     .findViewById(R.id.tvTexto);
+            viewHolder.tvPuntuacion = (TextView) convertView
+                    .findViewById(R.id.tvPunctuation);
 
             convertView.setTag(viewHolder);
         } else {
@@ -64,6 +69,7 @@ public class OpinionAdapter extends BaseAdapter{
         String titulo = data.get(position).getTitulo();
         String username = data.get(position).getUsername();
         String texto = data.get(position).getTexto();
+        String puntuacion = String.valueOf(data.get(position).getPuntuacion());
 
 
         Log.d(titulo, "creador");
@@ -72,6 +78,7 @@ public class OpinionAdapter extends BaseAdapter{
         viewHolder.tvTitulo.setText(titulo);
         viewHolder.tvUsername.setText(username);
         viewHolder.tvTexto.setText(texto);
+        viewHolder.tvPuntuacion.setText("Puntuacion: "+puntuacion);
 
         return convertView;
     }

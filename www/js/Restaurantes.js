@@ -111,6 +111,11 @@ $("#boton_nuevo_user").click(function(e) {
     }
     crearUser(nuevoUser);
   });
+$("#logout").click(function(e) {
+   e.preventDefault();
+   Logout();
+});
+
 
 function getLogin(){
    console.log("LOGIN2");
@@ -172,6 +177,16 @@ function Login(login){
    });
 
 
+}
+
+function Logout(){
+
+document.cookie="username = "+ "";
+document.cookie="BoolLogin = " + "";
+
+$("#name_login").text('');
+               $("<b>"+ "No estas logeado" +" </b>").appendTo($("#name_login"));   
+               $("#div_tohide").show(50); 
 }
 
 function getRestaurantes(){

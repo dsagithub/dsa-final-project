@@ -21,14 +21,26 @@ public class RestaurappMainActivity extends Activity {
     }
 
     public void BuscarBarcelona(View v){
-
-        StartListActivity();
+        String provincia = "Barcelona";
+        StartListActivity(provincia);
+    }
+    public void BuscarTarragona(View v){
+        String provincia = "Tarragona";
+        StartListActivity(provincia);
+    }
+    public void BuscarLleida(View v){
+        String provincia = "Lleida";
+        StartListActivity(provincia);
+    }
+    public void BuscarGirona(View v){
+        String provincia = "Girona";
+        StartListActivity(provincia);
     }
 
-    private void StartListActivity() {
+    private void StartListActivity(String provincia) {
         Intent intent = new Intent(this, ListarRestaurantesActivity.class);
+        intent.putExtra("provincia", provincia);
         startActivity(intent);
-        finish();
     }
 
     public void MostrarMapa (View v){
@@ -40,6 +52,5 @@ public class RestaurappMainActivity extends Activity {
         System.out.println("mostrar mapa startmapactivity");
         Intent intent = new Intent(this, map_activity.class);
         startActivity(intent);
-        finish();
     }
 }

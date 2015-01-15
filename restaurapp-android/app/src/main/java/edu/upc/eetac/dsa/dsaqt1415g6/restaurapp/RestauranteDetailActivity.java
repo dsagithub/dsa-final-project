@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -24,6 +25,7 @@ public class RestauranteDetailActivity extends Activity {
 
     private final static String TAG = RestauranteDetailActivity.class.getName();
     public String urlRestaurante;
+    private String idRest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,18 +67,11 @@ public class RestauranteDetailActivity extends Activity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.opiniones:
-                Intent intent = new Intent(this, ListarOpinionesActivity.class);
-                intent.putExtra("url", urlRestaurante);
-                startActivity(intent);
-                return true;
 
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+    public void MostrarOpiniones(View v){
+        Intent intent = new Intent(this, ListarOpinionesActivity.class);
+        intent.putExtra("idRes", idRest);
+        startActivity(intent);
     }
 
     private class FetchRestauranteTask extends AsyncTask<String, Void, Restaurante> {
@@ -91,6 +86,7 @@ public class RestauranteDetailActivity extends Activity {
             } catch (AppException e) {
                 Log.d(TAG, e.getMessage(), e);
             }
+            idRest = String.valueOf(restaurante.getIdRestaurante());
             return restaurante;
         }
 
