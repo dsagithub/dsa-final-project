@@ -12,10 +12,15 @@
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 </head>
-  <body style="background:#94F4A3">
+  <style>
+		body {
+		background-image: url("imagenes-web/vino.jpg");
+		
+			}
+</style>
   
 
-  <nav class="navbar" role="navigation">
+  <nav class="navbar" role="navigation"style="background:#000000">
    <div class="container-fluid">  
      <div class="navbar-header">
         <span class="sr-only">Toggle navigation</span>
@@ -53,18 +58,16 @@
 
 
        <div  ALIGN=right id="div_tohide"> 
-        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
+        <label for="label_nombre" > <b> <font color= "white">Usuario: </font> </b> </label> 
         <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
       
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label>
+        <label for="label_password"> <b> <font color= "white">Contraseña: </font> </b> </label>
    <input type="password" id="id_password_login" name="label_id_password" />
 
         <button>
           <FONT color="green" size="2" id="button_login"> Log in </FONT>
         </button>
-<br>
-<br>
-<br>
+
         <button>
           <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
         </button>
@@ -83,34 +86,34 @@
      <div class="col-sm-6">
       
           <form role="form" >
-            <legend>Nuevo restaurante:</legend>
-              <div class="form-group">
+            <legend style="color:#F5FBEF">Nuevo restaurante:</legend>
+              <div class="form-group" style="color:#F5FBEF">
                 <label for="nombre_restaurante">Nombre </label>
                 <input type="text" class="form-control" id="nombre_rest" placeholder="Introduce nombre del restaurante">
               </div>
 
-              <div class="form-group">
+              <div class="form-group" style="color:#F5FBEF">
                 <label for="nombre_direccion_restaurante">Dirección</label>
                 <input type="text" class="form-control" id="direccion_rest" placeholder="Introduce la dirección de tu restaurante">
               </div>
 
-              <div class="form-group">
+              <div class="form-group" style="color:#F5FBEF">
                 <label for="email">Email</label>
                 <input type="email" class="form-control" id="email_rest" placeholder="Introduce email de contacto">
               </div>
 
-            <div class="form-group">
+            <div class="form-group" style="color:#F5FBEF">
               <label for="telefono">Teléfono</label>
               <input type="text" class="form-control" id="telefono_rest" placeholder="Introduce el telefono de tu restaurante">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="color:#F5FBEF">
               <label for="horario">Horario</label>
               <input type="text" class="form-control" id="horario_rest" placeholder="Introduce el horario de tu restaurante">
             </div>
 
             <div class="form-group">
-              <label for="categoria">Categoría</label>
+              <label for="categoria"style="color:#F5FBEF">Categoría</label>
               <select id="categoria_rest">
                       <option value="None">-- Select --</option>
                       <option value="Española">Española</option>
@@ -124,7 +127,7 @@
                   </select>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="color:#F5FBEF">
               <label for="provincia">Provincia</label>
               <input type="text" class="form-control" id="provincia_rest" placeholder="Introduce la provincia de tu restaurante">
               

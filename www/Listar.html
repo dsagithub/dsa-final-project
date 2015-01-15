@@ -10,12 +10,20 @@
 
       <!-- Optional theme -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
+	<link rel="shortcut icon" href="imagenes-web/logo5.png" type="image/png" />
 </head>
-  <body style="background:#94F4A3" onload=getRestaurantes()>
+<style>
+		body {
+		background-image: url("imagenes-web/llamas.jpg");
+		
+			}
+</style>
+
+
+  <body  onload=getRestaurantes()>
   
 
-  <nav class="navbar" role="navigation">
+  <nav class="navbar" role="navigation" style="background:#000000">
    <div class="container-fluid">  
      <div class="navbar-header">
         <span class="sr-only">Toggle navigation</span>
@@ -47,30 +55,28 @@
        </ul>
       </div>  
    </div>
-  </nav>
+  
 
     
 
 
-       <div  ALIGN=right id="div_tohide"> 
-        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
+       <div  ALIGN=right style="background:#000000" id="div_tohide"> 
+        <label for="label_nombre" > <b> <font color= "white">Usuario: </font> </b> </label> 
         <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
       
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label>
+        <label for="label_password"> <b> <font color= "white">Contraseña: </font> </b> </label>
    <input type="password" id="id_password_login" name="label_id_password" />
 
         <button>
           <FONT color="green" size="2" id="button_login"> Log in </FONT>
         </button>
-<br>
-<br>
-<br>
+
         <button>
           <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
         </button>
 
       </div>
-    
+    </nav>
 <br>
 <br>
 <br>
@@ -80,10 +86,13 @@
 <br>
 <br>
 <br>
-
-
-       <div class="row">
-          <div class="col-sm-8">
+<div>
+	<div class="col-sm-3">
+     </div>
+		<div class="col-sm-6">
+       <div class="row" >
+	  
+          
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h3 class="panel-title">Lista Restaurantes</h3>
@@ -91,19 +100,17 @@
               <div class="list-group" id="restaurantes_result">
                 
               </div>
-
-          
-
             </div>
-          </div><!-- /.col-sm-8 -->
+          <!-- /.col-sm-8 -->
 
-          <div class="col-sm-4">
-            <button type="button" class="btn btn-info" id="button_list_rest">Lista Restaurantes</button>
-
+          <div> 
+		  
+            <button type="button" style="color:#088A08" id="button_list_rest">Lista Restaurantes</button>
+			
           </div>  
-        </div>
-
-
+		</div>    
+	</div> 
+</div>
 
 
 

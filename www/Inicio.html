@@ -10,12 +10,19 @@
 
       <!-- Optional theme -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-
+	<link rel="shortcut icon" href="imagenes-web/logo5.png" type="image/png" />
 </head>
-  <body style="background:#94F4A3">
-  
 
-  <nav class="navbar" role="navigation">
+
+  
+  <style>
+		body {
+		background-image: url("imagenes-web/fondo6.jpg");
+		
+			}
+</style>
+
+  <nav class="navbar" role="navigation" style="background:#000000">
 	 <div class="container-fluid">  
 		 <div class="navbar-header">
         <span class="sr-only">Toggle navigation</span>
@@ -47,30 +54,28 @@
 			 </ul>
 		  </div>  
 	 </div>
-  </nav>
+  
 
     
 
 
-       <div  ALIGN=right id="div_tohide" > 
-        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
+       <div  ALIGN=right style="background:#000000"  id="div_tohide" > 
+        <label for="label_nombre" > <b> <font color= "white">Usuario: </font> </b> </label> 
         <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
       
-        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label>
+        <label for="label_password"> <b> <font color= "white">Contraseña: </font> </b> </label>
 	 <input type="password" id="id_password_login" name="label_id_password" />
 
         <button>
           <FONT color="green" size="2" id="button_login"> Log in </FONT>
         </button>
-<br>
-<br>
-<br>
+
         <button>
           <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
         </button>
 
       </div>
-    
+    </nav>
 
 <br>
 <br>
@@ -78,117 +83,51 @@
 <br>
 <br>
 
-        <div>
-          <center>
-        <script language="JavaScript1.2">
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+    <li data-target="#myCarousel" data-slide-to="3"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+	<center>
+		
+      <img src="imagenes-web/8.jpg" alt="Chania">
+    </div>
+
+    <div class="item">
+	<center>
+      <img src="imagenes-web/9.jpg" alt="Chania">
+    </div>
+
+    <div class="item">
+	<center>
+      <img src="imagenes-web/10.jpg" alt="Flower">
+    </div>
+
+    <div class="item">
+	<center>
+      <img src="imagenes-web/11.jpg" alt="Flower">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
 
 
-            var slideshow_width='1200px' //SET SLIDESHOW WIDTH (set to largest image's width if multiple dimensions exist)
-            var slideshow_height='500px' //SET SLIDESHOW HEIGHT (set to largest image's height if multiple dimensions exist)
-            var pause=3000 //SET PAUSE BETWEEN SLIDE (2000=2 seconds)
-            var slidebgcolor="white"
-
-            var dropimages=new Array()
-                //SET IMAGE PATHS. Extend or contract array as needed
-                dropimages[0]="imagenes-web/8.jpg"
-                dropimages[1]="imagenes-web/9.jpg"
-                dropimages[2]="imagenes-web/10.jpg"
-                
-            var droplinks=new Array()
-                //SET IMAGE URLs. Use "" if you wish particular image to NOT be linked:
-                droplinks[0]=""
-                droplinks[1]=""
-                droplinks[2]=""
-
-
-        ////NO need to edit beyond here/////////////
-
-            var preloadedimages=new Array()
-              for (p=0;p<dropimages.length;p++)
-                {
-                    preloadedimages[p]=new Image()
-                    preloadedimages[p].src=dropimages[p]
-                }
-
-            var ie4=document.all
-            var dom=document.getElementById
-
-              if (ie4||dom)
-                document.write('<div style="position:relative;width:'+slideshow_width+';height:'+slideshow_height+';overflow:hidden"><div id="canvas0" style="position:absolute;width:'+slideshow_width+';height:'+slideshow_height+';background-color:'+slidebgcolor+';left:-'+slideshow_width+'"></div><div id="canvas1" style="position:absolute;width:'+slideshow_width+';height:'+slideshow_height+';background-color:'+slidebgcolor+';left:-'+slideshow_width+'"></div></div>')
-              else
-                document.write('<a href="javascript:rotatelink()"><img name="defaultslide" src="'+dropimages[0]+'" border=0></a>')
-
-            var curpos=parseInt(slideshow_width)*(-1)
-            var degree=10
-            var curcanvas="canvas0"
-            var curimageindex=linkindex=0
-            var nextimageindex=1
-
-
-            function movepic(){
-                if (curpos<0)
-                  {
-                    curpos=Math.min(curpos+degree,0)
-                    tempobj.style.left=curpos+"px"
-                  }
-                else
-                  {
-
-                    clearInterval(dropslide)
-                    nextcanvas=(curcanvas=="canvas0")? "canvas0" : "canvas1"
-                    tempobj=ie4? eval("document.all."+nextcanvas) : document.getElementById(nextcanvas)
-                    var slideimage='<img src="'+dropimages[curimageindex]+'" border=0>'
-                    tempobj.innerHTML=(droplinks[curimageindex]!="")? '<a href="'+droplinks[curimageindex]+'">'+slideimage+'</a>' : slideimage
-                    nextimageindex=(nextimageindex<dropimages.length-1)? nextimageindex+1 : 0
-                    setTimeout("rotateimage()",pause)
-                  }
-                }
-
-            function rotateimage()
-            {
-                if (ie4||dom)
-                {
-                    resetit(curcanvas)
-                    var crossobj=tempobj=ie4? eval("document.all."+curcanvas) : document.getElementById(curcanvas)
-                    crossobj.style.zIndex++
-                    var temp='setInterval("movepic()",50)'
-                    dropslide=eval(temp)
-                    curcanvas=(curcanvas=="canvas0")? "canvas1" : "canvas0"
-                }
-                else
-                document.images.defaultslide.src=dropimages[curimageindex]
-                linkindex=curimageindex
-                curimageindex=(curimageindex<dropimages.length-1)? curimageindex+1 : 0
-                }
-
-
-            function rotatelink(){
-                if (droplinks[linkindex]!="")
-                  window.location=droplinks[linkindex]
-                }
-
-            function resetit(what)
-                {
-                curpos=parseInt(slideshow_width)*(-1)
-                var crossobj=ie4? eval("document.all."+what) : document.getElementById(what)
-                crossobj.style.left=curpos+"px"
-                }
-
-            function startit()
-                {
-                var crossobj=ie4? eval("document.all."+curcanvas) : document.getElementById(curcanvas)
-                crossobj.innerHTML='<a href="'+droplinks[curimageindex]+'"><img src="'+dropimages[curimageindex]+'" border=0></a>'
-                rotateimage()
-                }
-
-            if (ie4||dom)
-                window.onload=startit
-            else
-                setInterval("rotateimage()",pause)
-
-        </script>
-          </center>
-        </div>
 <br>
 <br>
 <br>
@@ -196,11 +135,37 @@
               
 
 <br>
-          
+<div class="row">
+		<center>
+        <div class="col-lg-4">
+          <img class="img-circle" src="imagenes-web/catal.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <span style = "color:#F5FBBF">
+		  <h2>Localizaciones</h2>
+		  <p>Tenemos el mapa de cataluña dividido en diferentes localizaciones. Barcelona, Tarragona, Lleida y Girona. Seas de la localidad que seas podrás encontrar el restaurante de tus sueños.</p>
+          </span>		  
+		</div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src="imagenes-web/cubiertos.jpg" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <span style = "color:#F5FBBF">
+		  <h2>Cocina</h2>
+          <p> Tenemos 7 tipos diferentes de cocina. Para todos los gustos. Hemos buscado para cada localización los diferentes tipos de restaurantes para que se adapte a todos los gustos. </p>
+          </span>		  
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+          <img class="img-circle" src=" imagenes-web/android-icon.jpg " alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <span style = "color:#F5FBBF">
+		  <h2>Aplicación Móvil</h2>
+          <p> Restaurapp tiene aplicación móvil para el sistema operativo Android. Encuentra tu restaurante favorito con la geolocalización tanto en la aplicación como en la web. </p>
+          </span>		  
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->   
+<br>
+<br>
+<br>         
           
         <div>
           <center>
-            <label for="label_buscar_zona"> <b> <font color= "black">Zona geográfica: </font> </b> </label>
+            <label for="label_buscar_zona"> <b> <font color= "#F5FBBF" size= 5>Zona geográfica: </font> </b> </label>
 
            <div class="container">
    
@@ -217,7 +182,7 @@
              </div>
           </div>
 
-          <label for="label_buscar_tipo_restaurante"> <b> <font color= "black">Tipo de Cocina: </font> </b> </label>
+          <label for="label_buscar_tipo_restaurante"> <b> <font color= "#F5FBBF" size= 5>Tipo de Cocina: </font> </b> </label>
 
             <div class="container">
               <div class="panel-body">
@@ -242,9 +207,10 @@
 <br>
 <br>
           <center>
+		  <label for="label_buscar_zona"> <b> <font color= "#F5FBBF" size= 5>Buscar Restaurante</font> </b> </label>
                 <button>
-                  <FONT color="green" size="3" id="button_buscar"> BUSCAR </FONT>
-                </button>
+                  <FONT color="green" size="3" id="button_buscar"> <img src="imagenes-web/lupa-icono.png" > </FONT>
+                </button></a>
           </center>
         </div>
 
