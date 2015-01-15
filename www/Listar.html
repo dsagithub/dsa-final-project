@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
-<head>
-	<meta charset="utf-8"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-	<title>RestaurApp</title>
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> 
+  <head>
+  <meta charset="utf-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>RestaurApp</title>
+  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> 
       <!-- Latest compiled and minified CSS -->
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
@@ -12,51 +12,65 @@
       <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 </head>
-<body style="background:#94F4A3">
+  <body style="background:#94F4A3" onload=getRestaurantes()>
   
 
-	<! hacemos las barras de navegación>
-
-
-<nav class="navbar" role="navigation">
-	<div class="container-fluid">  <! Tenemos un gap por usar el normal container el fluid lo acerca a la izquierda >
-		 <div class="navbar-header"> <! Esta clase con el button trabaja con el collapse y hace que cuando la ventana se haga más pequeña salan los icon-bar que son pestañas cuando reduces la ventana>
-
-      <button type="button" class="navbar-toggle collapsed " data-toggle="collapse" data-target="#bs-ML-navbar-collapse-1">
+  <nav class="navbar" role="navigation">
+   <div class="container-fluid">  
+     <div class="navbar-header">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </button>
-
-
-		<a class="navbar-brand" href="#"><img src="logo5.png" border="0" height="180" width="260"></a> <! la barra de navegacion >
-		</div>
+        <a class="navbar-brand" href="Inicio.html"><img src="imagenes-web/logo5.png" border="0" height="180" width="260"></a> 
+      </div>
 
 
 
-		 <div class="collapse navbar-collapse navbar-right" id="bs-ML-navbar-collapse-1"> <! para que cuando lo uses en tablets o reduzcas el tamaño de la pantalla funcione correctamente (COLLAPSE) >
-			<ul class="nav navbar-nav nav-tabs">  <!ponemos la barra de navegación con los links  // nav-tabs para que se vea mejor mas sofisticado>
-				<li><a href="Inicio.html">Pagina Inicio</a></li>
-				<li><a href="Acercade.html">Acerca de</a></li>
-				<li><a href="contacto.html">Contacto</a></li>
-				  <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Nombre User <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="#">Link1</a></li>
-            <li><a href="#">Link1</a></li>
-            <li><a href="#">Link1</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Mi perfil</a></li>
-            <li class="divider"></li>
-            <li><a href="#">Desconectarse</a></li>
-          </ul>
-        </li>
-			</ul>
-		</div>  
-	</div>
-</nav>
+     <div class="collapse navbar-collapse navbar-right" id="bs-ML-navbar-collapse-1">
+       <ul class="nav navbar-nav nav-tabs"> 
+          <li><a href="Inicio.html">Pagina Inicio</a></li>
+          <li><a href="Acercade.html">Acerca de</a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="name_login"><span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">Link1</a></li>
+              <li><a href="#">Link1</a></li>
+              <li><a href="#">Link1</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Mi perfil</a></li>
+              <li class="divider"></li>
+              <li><a href="#">Desconectarse</a></li>
+           </ul>
+         </li>
+       </ul>
+      </div>  
+   </div>
+  </nav>
 
+    
+
+
+       <div  ALIGN=right id="div_tohide"> 
+        <label for="label_nombre" > <b> <font color= "black">Usuario: </font> </b> </label> 
+        <input type="text" id="id_nombre_login" name="label_id_nombre" width="48" height="100"/>
+      
+        <label for="label_password"> <b> <font color= "black">Contraseña: </font> </b> </label>
+   <input type="password" id="id_password_login" name="label_id_password" />
+
+        <button>
+          <FONT color="green" size="2" id="button_login"> Log in </FONT>
+        </button>
+<br>
+<br>
+<br>
+        <button>
+          <FONT color="green" size="2" id="button_registrarse"> Registrate </FONT>
+        </button>
+
+      </div>
+    
 <br>
 <br>
 <br>
@@ -104,7 +118,7 @@
       <!-- Include all compiled plugins (below), or include individual files as needed -->
 
       <!-- Event and AJAX functions -->
-      <script type="text/javascript" src ="Inicio.js"></script>
+      <script type="text/javascript" src ="js/Restaurantes.js"></script>
 </body>
 
 </html>
