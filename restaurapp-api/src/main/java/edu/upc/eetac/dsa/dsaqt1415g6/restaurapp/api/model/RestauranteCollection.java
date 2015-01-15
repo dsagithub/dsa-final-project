@@ -17,10 +17,7 @@ public class RestauranteCollection {
 
 	@InjectLinks({
 			@InjectLink(resource = RestauranteResource.class, style = Style.ABSOLUTE, rel = "create-restaurante", title = "Crear Restaurante", type = MediaType.RESTAURAPP_API_RESTAURATE),
-			@InjectLink(value = "/restaurantes?last={last}", style = Style.ABSOLUTE, rel = "anterior", title = "Restaurantes Anteriores", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "last", value = "${instance.oldestTimestamp}") }),// $-->toda
-																																																																					// {}-->
-																																																																					// valor
-																																																																					// deseado
+			@InjectLink(value = "/restaurantes?last={last}", style = Style.ABSOLUTE, rel = "anterior", title = "Restaurantes Anteriores", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "last", value = "${instance.oldestTimestamp}") }),																																																																		// deseado
 			@InjectLink(value = "/restaurantes?next={next}", style = Style.ABSOLUTE, rel = "siguiente", title = "Siguientes Restaurantes", type = MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION, bindings = { @Binding(name = "next", value = "${instance.newestTimestamp}") }) })
 	private List<Link> links;
 	private List<Restaurante> restaurantes;

@@ -293,19 +293,19 @@ public class RestauranteResource {
 	
 	
 	
-	private String GET_RESTAURATES_QUERY_BY_PARAMETROS = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest  and rest.categoria=? and rest.provincia=? order by  rest.idrestaurante desc limit ?";
-	private String GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS = "select rest.*, u.username, op.* from restaurantes rest, users u, opiniones op where u.username=rest.creador and rest.idrestaurante=op.idrest  and rest.categoria=? and rest.provincia=? and rest.idrestaurante > ? order by rest.idrestaurante desc";
+	private String GET_RESTAURATES_QUERY_BY_PARAMETROS = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.categoria=? and rest.provincia=? and rest.creation_timestamp < ifnull(?, now())  order by creation_timestamp desc limit ?";
+	private String GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.categoria=? and rest.provincia=? and rest.creation_timestamp > ? order by creation_timestamp desc";
 
 	
-	/*@GET
+	@GET
 	@Path("/search")
 	@Produces(MediaType.RESTAURAPP_API_RESTAURANTE_COLLECTION)
 	public RestauranteCollection buscarRestaurantes(
 			@QueryParam("categoria") String categoria,
 			@QueryParam("provincia") String provincia,
 			@QueryParam("length") int length,
-			@QueryParam("before") int before, 
-			@QueryParam("after") int after){
+			@QueryParam("last") int last, 
+			@QueryParam("next") int next){
 		RestauranteCollection restaurantes = new RestauranteCollection();
 		Connection conn = null;
 		try {
@@ -318,41 +318,47 @@ public class RestauranteResource {
 		PreparedStatement stmt = null;
 
 		try {
-			boolean updateFromLast = after > 0;
-			System.out.println("Dentro del try con valor updateFromLast...."+ updateFromLast);
-
+			boolean updateFromLast = next > 0;
 			stmt = updateFromLast ? conn
 					.prepareStatement(GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS) : conn
 					.prepareStatement(GET_RESTAURATES_QUERY_BY_PARAMETROS);
+				stmt.setString(1,categoria);
+				stmt.setString(2,provincia);
 			if (updateFromLast) {
-				stmt.setInt(1, after);
-			}else{
-				length = (length <= 0) ? 8 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
-				stmt.setInt(1, length);
+				stmt.setTimestamp(3, new Timestamp(next));
+			} else {
+				if (last > 0)
+					stmt.setTimestamp(3, new Timestamp(last));
+				else
+					stmt.setTimestamp(3, null);
+				
+				length = (length <= 0) ? 9 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+				stmt.setInt(4, length);
 			}
 			
 			ResultSet rs = stmt.executeQuery();
 			boolean first = true;
 			long oldestTimestamp = 0;
 			while (rs.next()) {
-				Libros libro = new Libros();
-				libro.setLibroid(rs.getInt("libroid"));
-				libro.setAutor(rs.getString("name"));
-				libro.setIdautor(rs.getInt("idAuthor"));
-				libro.setDateCreation(rs.getTimestamp("DateCreation").getTime());
-				oldestTimestamp = rs.getTimestamp("DateImpresion").getTime();
-				libro.setDateImpresion(oldestTimestamp);
-				libro.setEdition(rs.getString("edition"));
-				libro.setEditorial(rs.getString("editorial"));
-				libro.setLanguage(rs.getString("language"));
-				libro.setTitle(rs.getString("title"));
+				Restaurante restaurante = new Restaurante();
+				restaurante.setNombre(rs.getString("nombre"));
+				restaurante.setCategoria(rs.getString("categoria"));
+				restaurante.setDireccion(rs.getString("direccion"));
+				restaurante.setEmail(rs.getString("email"));
+				restaurante.setHorario(rs.getString("horario"));
+				oldestTimestamp = rs.getTimestamp("creation_timestamp").getTime();
+				restaurante.setCreationTime(oldestTimestamp);
+				restaurante.setIdrestaurante(rs.getInt("idrestaurante"));
+				restaurante.setProvincia(rs.getString("provincia"));
+				restaurante.setTelefono(rs.getString("telefono"));
+				restaurante.setCreador(rs.getString("username"));
 				if (first) {
 					first = false;
-					libros.setNewestTimestamp(libro.getDateImpresion());
+					restaurantes.setNewestTimestamp(restaurante.getCreationTime());
 				}
-				libros.addLibros(libro);
+				restaurantes.addRestaurantes(restaurante);
 			}
-			libros.setOldestTimestamp(oldestTimestamp);
+			restaurantes.setOldestTimestamp(oldestTimestamp);
 		} catch (SQLException e) {
 			throw new ServerErrorException(e.getMessage(),
 					Response.Status.INTERNAL_SERVER_ERROR);
@@ -365,9 +371,9 @@ public class RestauranteResource {
 			}
 		}
 
-		return libros;
+		return restaurantes;
 	}
-	*/
+	
 	
 	private String INSERT_RESTAURANTE_QUERY = "insert into restaurantes (nombre, direccion, telefono, email, horario, categoria, creador, provincia) values (?,?,?,?,?,?,?,?)";
 
@@ -594,6 +600,136 @@ public class RestauranteResource {
 		}
 		return opinion;
 	}
+	
+	
+	private String GET_OPINIONES_BY_IDRESTAURANTE = "select * from opiniones where idrest=?";
+	
+	@GET
+	@Path("/opinion/{idrestaurante}")
+	@Produces(MediaType.RESTAURAPP_API_OPINION)
+	public Restaurante getOpiniones(@PathParam("idrestaurante") String idrestaurante) {
+		
+		Restaurante opiniones = new Restaurante();
+		
+		System.out.println("Dentro de la funcion GET....");
+
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+		System.out.println("Conectado a la BD....");
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_OPINIONES_BY_IDRESTAURANTE);
+			stmt.setInt(1, Integer.parseInt(idrestaurante));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				Opinion opinion = new Opinion();
+				
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
+				
+				
+				opiniones.addOpinion(opinion);
+			}
+
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		System.out.println("returning");
+
+		return opiniones;
+	}
+	
+	private String GET_OPINION_BY_IDRESTAURANTE = "select * from opiniones where idrest=? and idopinion=?";
+	
+	@GET
+	@Path("/opinion/{idrestaurante}/{idopinion}")
+	@Produces(MediaType.RESTAURAPP_API_OPINION)
+	public Opinion getOpinion(@PathParam("idrestaurante") String idrestaurante, @PathParam("idopinion") String idopinion){
+		
+		System.out.println("Dentro de la funcion GET....");
+		
+		Opinion opinion = new Opinion();
+		
+		System.out.println("Dentro de la funcion GET....");
+
+		Connection conn = null;
+		try {
+			conn = ds.getConnection();
+		} catch (SQLException e) {
+			throw new ServerErrorException("Could not connect to the database",
+					Response.Status.SERVICE_UNAVAILABLE);
+		}
+		System.out.println("Conectado a la BD....");
+
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(GET_OPINION_BY_IDRESTAURANTE);
+			stmt.setInt(1, Integer.parseInt(idrestaurante));
+			stmt.setInt(2,Integer.parseInt(idopinion));
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				
+				
+				opinion.setFecha_estancia(rs.getString("mes_estancia"));
+				opinion.setCreation_timestamp(rs.getTimestamp("opinion_creation").getTime());
+				opinion.setIdopinion(rs.getInt("idopinion"));
+				opinion.setIdrestaurante(rs.getInt("idrest"));
+				opinion.setNoutilidad(rs.getInt("cont_noutilidad"));
+				opinion.setPuntuacion(rs.getInt("puntuacion"));
+				opinion.setTexto(rs.getString("texto"));
+				opinion.setTitulo(rs.getString("titulo"));
+				opinion.setUsername(rs.getString("username"));
+				opinion.setUtilidad(rs.getInt("cont_utilidad"));
+				
+			}
+
+		} catch (SQLException e) {
+			throw new ServerErrorException(e.getMessage(),
+					Response.Status.INTERNAL_SERVER_ERROR);
+		} finally {
+			try {
+				if (stmt != null)
+					stmt.close();
+				conn.close();
+			} catch (SQLException e) {
+			}
+		}
+		System.out.println("returning");
+
+		
+		return opinion;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	private String GET_OPINION_BY_ID_QUERY = "select * from opiniones where idopinion=?";
 

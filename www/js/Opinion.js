@@ -29,8 +29,7 @@ $("#boton_comentario").click(function(e) {
   e.preventDefault();
     var newRest;
     if($('#nombre_restaurante').val()=="" || $('#titulo_opinion').val()=="" || $('#nombre_user').val()==""|| $('#fecha_estancia').val()==""|| $('#horario').val()==""|| $('#telefono_restaurante').val()=="" || $('#provincia_restaurante').val()=="" ){
-        $('<div class="alert alert-info"> Rellena todos los campos </div>').appendTo
-    ($("#create_result"));
+        $('<div class="alert alert-info"> Rellena todos los campos </div>').appendTo($("#create_result"));
     }else{
     newRest = {
       "titulo" : $('#nombre_restaurante').val(),
@@ -39,9 +38,9 @@ $("#boton_comentario").click(function(e) {
       "fecha_estancia" : $('#fecha_estancia').val(),
       "horario" : $('#horario').val(),
       "nombre" : $('#nombre_restaurante').val(),
-	  "provincia" : $('#provincia_restaurante').val(),
+	    "provincia" : $('#provincia_restaurante').val(),
       "telefono" : $('#telefono_restaurante').val(),
-	  "texto" : $('#opinion_restaurante').val(),
+	    "texto" : $('#opinion_restaurante').val(),
       
     }
     createOpinion(newRest);
