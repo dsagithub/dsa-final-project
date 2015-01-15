@@ -56,7 +56,6 @@ public class RestauranteDetailActivity extends Activity {
         tvDetailNombre.setText(restaurante.getNombre());
         tvDetailProvincia.setText(restaurante.getProvincia());
         tvDetailTelefono.setText(restaurante.getTelefono());
-
     }
 
     @Override
@@ -65,7 +64,6 @@ public class RestauranteDetailActivity extends Activity {
         inflater.inflate(R.menu.menu_restaurapp_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -80,7 +78,6 @@ public class RestauranteDetailActivity extends Activity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     private class FetchRestauranteTask extends AsyncTask<String, Void, Restaurante> {
         private ProgressDialog pd;
@@ -115,6 +112,4 @@ public class RestauranteDetailActivity extends Activity {
         }
 
     }
-
-
 }

@@ -1,10 +1,28 @@
+
+data = location.search.substring(1,location.search.length);
+console.log(data);
+datasplited = data.split("%20");
+getLocation();
+var destinationName1;
+function getLocation(){
+  for( i=0; i<datasplited.length; i++){
+    if (destinationName1==null){
+    destinationName1 = datasplited[i]+" ";
+    }
+    else {
+      destinationName1 = destinationName1 + datasplited[i]+" ";
+    } 
+  }
+}
+console.log(destinationName1);
+
+
 (function() {
   'use strict';
   var map, //the google map
   directionsService, //service that provides directions to reach our destination
   directionsDisplay, //renderer that draws directions on map
-  destinationName = 'Barcelona'; //our destination. Set yours!
-
+  destinationName= destinationName1
   // providers
   var html5Provider = function() {
     return {

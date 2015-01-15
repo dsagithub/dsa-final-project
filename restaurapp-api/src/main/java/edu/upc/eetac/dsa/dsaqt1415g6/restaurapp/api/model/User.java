@@ -10,8 +10,6 @@ public class User {
 	private int cont_opinion;
 	private String ubic_foto;
 	private boolean loginSuccesful;
-	private String userpass;
-	private boolean loginSuccessful;
 	
 	public String getUsername() {
 		return username;
@@ -62,16 +60,4 @@ public class User {
 		this.loginSuccesful = loginSuccesful;
 	}
 
-	public String getUserpass() {
-		return userpass;
-	}
-	public void setUserpass(String userpass) {
-		this.userpass = userpass;
-	}
-	public boolean isLoginSuccessful() {
-		return loginSuccessful;
-	}
-	public void setLoginSuccessful(boolean loginSuccessful) {
-		this.loginSuccessful = loginSuccessful;
-	}
 }

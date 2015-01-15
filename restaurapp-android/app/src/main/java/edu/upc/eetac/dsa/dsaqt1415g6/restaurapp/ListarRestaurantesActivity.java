@@ -28,10 +28,7 @@ public class ListarRestaurantesActivity extends ListActivity{
 
     private ArrayList<Restaurante> restaurantelist;
     private RestauranteAdapter adapter;
-
-
     private final static String TAG = ListarRestaurantesActivity.class.toString();
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,8 +51,6 @@ public class ListarRestaurantesActivity extends ListActivity{
         });
         (new FetchLibrosTask()).execute();
     }
-
-
 
     private class FetchLibrosTask extends
             AsyncTask<Void, Void, RestauranteCollection> {
@@ -96,10 +91,6 @@ public class ListarRestaurantesActivity extends ListActivity{
         restaurantelist.addAll(restaurantes.getRestaurantes());
         adapter.notifyDataSetChanged();
     }
-
-
-
-
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

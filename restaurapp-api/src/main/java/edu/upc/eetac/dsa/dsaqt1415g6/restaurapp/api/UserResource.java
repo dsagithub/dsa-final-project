@@ -59,7 +59,7 @@ public class UserResource {
 			stmt.setString(3, usuario.getNombre());
 			stmt.setString(4, usuario.getEmail());
 			stmt.setString(5, usuario.getProvincia());
-			stmt.setString(6, usuario.getUbic_foto());
+			stmt.setString(6, "my_photo.jpg");
 			
 
 			stmt.executeUpdate();
@@ -142,18 +142,25 @@ public class UserResource {
 	@Produces(MediaType.RESTAURAPP_API_USER)
 	@Consumes(MediaType.RESTAURAPP_API_USER)
 	public User login(User user) {
+		
 		System.out.println("Entramos al metodo");
-		if (user.getUsername() == null || user.getUserpass() == null)
+		if (user.getUsername() == null || user.getPassword() == null)
 			throw new BadRequestException(
 					"username and password cannot be null.");
-
-		String pwdDigest = DigestUtils.md5Hex(user.getUserpass()); //calculamos el md5 de la contraseña
-		String storedPwd = getUserFromDatabase(user.getUsername(), true) //nos devuelve el pasword en md5 y en hexadecimal y se puede comparar con el de la base de datos y que sean iguales
-				.getUserpass();
 		
-		user.setLoginSuccessful(pwdDigest.equals(storedPwd)); //ponemos el atributo de login si es true o false si coinciden
+		System.out.println(user.getPassword()+"pass");
+		System.out.println(user.getUsername()+"name");
+
+		String pwdDigest = DigestUtils.md5Hex(user.getPassword()); //calculamos el md5 de la contraseña
+		String storedPwd = getUserFromDatabase(user.getUsername(), true) //nos devuelve el pasword en md5 y en hexadecimal y se puede comparar con el de la base de datos y que sean iguales
+				.getPassword();
+		
+		user.setLoginSuccesful(pwdDigest.equals(storedPwd)); //ponemos el atributo de login si es true o false si coinciden
+		
+		System.out.println(user.isLoginSuccesful()+"logSUcces");
+
 		 
-		user.setUserpass(null); //cuando nos pasan el user, de manera que la contraseña no aparece
+		user.setPassword(null); //cuando nos pasan el user, de manera que la contraseña no aparece
 		System.out.println("Usuario logueado");
 		return user;
 	}
