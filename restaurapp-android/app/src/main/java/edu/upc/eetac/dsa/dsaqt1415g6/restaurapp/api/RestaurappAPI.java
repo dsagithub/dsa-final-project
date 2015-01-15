@@ -89,14 +89,20 @@ public class RestaurappAPI {
 
     }
 
-    public RestauranteCollection getRestaurantes() throws AppException {
+    public RestauranteCollection getRestaurantes(String filtro) throws AppException {
         Log.d(TAG, "getLibros()");
         RestauranteCollection restaurantes = new RestauranteCollection();
 
         HttpURLConnection urlConnection = null;
+
+        String preUrl =rootAPI.getLinks().get("restaurantes").getTarget();
+
+        String Url = preUrl + "/search?provincia="+filtro;
+
+        Log.d(TAG, Url);
+
         try {
-            urlConnection = (HttpURLConnection) new URL(rootAPI.getLinks()
-                    .get("restaurantes").getTarget()).openConnection();
+            urlConnection = (HttpURLConnection) new URL(Url).openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
             urlConnection.connect();
@@ -186,32 +192,20 @@ public class RestaurappAPI {
         return restaurantes;
     }
 
-    private Map<String, Restaurante> opinionesCache = new HashMap<String, Restaurante>();
 
-    public Restaurante getOpiniones(String urlRestaurante) throws AppException {
+    public Restaurante getOpiniones(String idRestaurante) throws AppException {
         Restaurante opiniones = null;
         HttpURLConnection urlConnection = null;
         try {
-            URL url = new URL(urlRestaurante);
-            urlConnection = (HttpURLConnection) url.openConnection();
+
+            String preUrl =rootAPI.getLinks().get("restaurantes").getTarget();
+
+            String Url = preUrl + "/opinion/"+idRestaurante;
+            urlConnection = (HttpURLConnection) new URL(Url).openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
 
-            opiniones = opinionesCache.get(urlRestaurante);
-            String eTag = (opiniones == null) ? null : opiniones.getETag();
-            if (eTag != null)
-                urlConnection.setRequestProperty("If-None-Match", eTag);
-            urlConnection.connect();
-            if (urlConnection.getResponseCode() == HttpURLConnection.HTTP_NOT_MODIFIED) {
-                Log.d(TAG, "CACHE");
-                return restauranteCache.get(urlRestaurante);
-            }
-            Log.d(TAG, "NOT IN CACHE");
             opiniones = new Restaurante();
-            eTag = urlConnection.getHeaderField("ETag");
-            opiniones.setETag(eTag);
-            restauranteCache.put(urlRestaurante, opiniones);
-
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     urlConnection.getInputStream()));
             StringBuilder sb = new StringBuilder();

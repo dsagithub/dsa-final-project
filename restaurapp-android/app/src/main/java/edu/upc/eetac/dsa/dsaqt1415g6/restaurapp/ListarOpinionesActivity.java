@@ -26,6 +26,7 @@ public class ListarOpinionesActivity extends ListActivity {
 
     private ArrayList<Opinion> opinioneslist;
     private OpinionAdapter adapter;
+    private String idRest;
 
 
     private final static String TAG = ListarOpinionesActivity.class.toString();
@@ -35,23 +36,13 @@ public class ListarOpinionesActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_rest_layout);
-        String urlRestaurante = (String) getIntent().getExtras().get("url");
+        idRest = (String) getIntent().getExtras().get("idRes");
 
         opinioneslist = new ArrayList<Opinion>();
         adapter = new OpinionAdapter(this, opinioneslist);
         setListAdapter(adapter);
 
-        SharedPreferences prefs = getSharedPreferences("restapp-profile",
-                Context.MODE_PRIVATE);
-        final String username = prefs.getString("username", null);
-        final String password = prefs.getString("password", null);
-        Authenticator.setDefault(new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password
-                        .toCharArray());
-            }
-        });
-        (new FetchOpinionTask()).execute(urlRestaurante);
+        (new FetchOpinionTask()).execute(idRest);
     }
 
 
@@ -64,7 +55,7 @@ public class ListarOpinionesActivity extends ListActivity {
             Restaurante opiniones = null;
             try {
                 opiniones = RestaurappAPI.getInstance(ListarOpinionesActivity.this)
-                        .getOpiniones(params[0]);
+                        .getOpiniones(idRest);
             } catch (AppException e) {
                 e.printStackTrace();
             }

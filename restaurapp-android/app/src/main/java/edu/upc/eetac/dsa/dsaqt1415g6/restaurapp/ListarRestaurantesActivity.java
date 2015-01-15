@@ -30,25 +30,19 @@ public class ListarRestaurantesActivity extends ListActivity{
     private RestauranteAdapter adapter;
     private final static String TAG = ListarRestaurantesActivity.class.toString();
 
+    public String filtroProvincia;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_rest_layout);
+        filtroProvincia = getIntent().getExtras().getString("provincia");
+
 
         restaurantelist = new ArrayList<Restaurante>();
         adapter = new RestauranteAdapter(this, restaurantelist);
         setListAdapter(adapter);
 
-        SharedPreferences prefs = getSharedPreferences("restapp-profile",
-                Context.MODE_PRIVATE);
-        final String username = prefs.getString("username", null);
-        final String password = prefs.getString("password", null);
-        Authenticator.setDefault(new Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(username, password
-                        .toCharArray());
-            }
-        });
         (new FetchLibrosTask()).execute();
     }
 
@@ -61,7 +55,7 @@ public class ListarRestaurantesActivity extends ListActivity{
             RestauranteCollection restaurantes = null;
             try {
                 restaurantes = RestaurappAPI.getInstance(ListarRestaurantesActivity.this)
-                        .getRestaurantes();
+                        .getRestaurantes(filtroProvincia);
             } catch (AppException e) {
                 e.printStackTrace();
             }

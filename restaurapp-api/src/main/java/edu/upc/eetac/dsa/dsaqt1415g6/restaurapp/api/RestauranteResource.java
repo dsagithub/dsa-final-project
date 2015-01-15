@@ -78,7 +78,7 @@ public class RestauranteResource {
 			if (updateFromLast) {
 				stmt.setInt(1, after);
 			}else{
-				length = (length <= 0) ? 8 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+				length = (length <= 0) ? 20 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
 				stmt.setInt(1, length);
 			}
 			ResultSet rs = stmt.executeQuery();
@@ -295,6 +295,8 @@ public class RestauranteResource {
 	
 	private String GET_RESTAURATES_QUERY_BY_PARAMETROS = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.categoria=? and rest.provincia=? and rest.creation_timestamp < ifnull(?, now())  order by creation_timestamp desc limit ?";
 	private String GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.categoria=? and rest.provincia=? and rest.creation_timestamp > ? order by creation_timestamp desc";
+	private String GET_RESTAURATES_QUERY_BY_PARAMETROS_A = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.provincia=? and rest.creation_timestamp < ifnull(?, now())  order by creation_timestamp desc limit ?";
+	private String GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS_A = "select rest.*, u.username from restaurantes rest, users u where u.username=rest.creador and rest.provincia=? and rest.creation_timestamp > ? order by creation_timestamp desc";
 
 	
 	@GET
@@ -318,22 +320,44 @@ public class RestauranteResource {
 		PreparedStatement stmt = null;
 
 		try {
-			boolean updateFromLast = next > 0;
-			stmt = updateFromLast ? conn
-					.prepareStatement(GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS) : conn
-					.prepareStatement(GET_RESTAURATES_QUERY_BY_PARAMETROS);
-				stmt.setString(1,categoria);
-				stmt.setString(2,provincia);
-			if (updateFromLast) {
-				stmt.setTimestamp(3, new Timestamp(next));
-			} else {
-				if (last > 0)
-					stmt.setTimestamp(3, new Timestamp(last));
-				else
-					stmt.setTimestamp(3, null);
-				
-				length = (length <= 0) ? 9 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
-				stmt.setInt(4, length);
+			
+			if (categoria==null){
+				boolean updateFromLast = next > 0;
+				stmt = updateFromLast ? conn
+						.prepareStatement(GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS_A) : conn
+						.prepareStatement(GET_RESTAURATES_QUERY_BY_PARAMETROS_A);
+					stmt.setString(1,provincia);
+				if (updateFromLast) {
+					stmt.setTimestamp(2, new Timestamp(next));
+				} else {
+					if (last > 0)
+						stmt.setTimestamp(2, new Timestamp(last));
+					else
+						stmt.setTimestamp(2, null);
+					
+					length = (length <= 0) ? 30: length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+					stmt.setInt(3, length);
+				}
+			
+			}
+			else{
+				boolean updateFromLast = next > 0;
+				stmt = updateFromLast ? conn
+						.prepareStatement(GET_RESTAURATES_QUERY_FROM_LAST_BY_PARAMETROS) : conn
+						.prepareStatement(GET_RESTAURATES_QUERY_BY_PARAMETROS);
+					stmt.setString(1,categoria);
+					stmt.setString(2,provincia);
+				if (updateFromLast) {
+					stmt.setTimestamp(3, new Timestamp(next));
+				} else {
+					if (last > 0)
+						stmt.setTimestamp(3, new Timestamp(last));
+					else
+						stmt.setTimestamp(3, null);
+					
+					length = (length <= 0) ? 9 : length;// si lenght menor a 0 coge valor a 5 sino coge valor por defecto de lenght
+					stmt.setInt(4, length);
+				}
 			}
 			
 			ResultSet rs = stmt.executeQuery();
