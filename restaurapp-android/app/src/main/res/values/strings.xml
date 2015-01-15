@@ -6,21 +6,16 @@
     <string name="login_username">Usuario</string>
     <string name="login_password">Contraseña</string>
     <string name="welcome">Bienvenido a Restaurapp</string>
-    <string name="eleccion">Escoja una opción de búsqueda</string>
-
-
+    <string name="eleccion">Escoja una localización</string>
 
     <string name="sign_in_activate">Login</string>
     <string name="cancel">Cancelar</string>
     <string name="sign_up">Registrarse</string>
 
-
     <string name="barcelona">Barcelona</string>
-
-
-
-
-
+    <string name="tarragona">Tarragona</string>
+    <string name="lleida">Lleida</string>
+    <string name="girona">Girona</string>
 
 
 </resources>
